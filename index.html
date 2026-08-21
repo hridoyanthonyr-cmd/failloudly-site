@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hridoy Rozario — Integration &amp; Automation Engineering</title>
+<meta name="description" content="Freelance integration engineer. CRM, database and outreach systems connected, synced, and left running.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E9E2;
+    --paper-2:#DDE0D7;
+    --ink:#1B221F;
+    --ink-soft:#5A635E;
+    --rule:#C2C7BB;
+    --signal:#C0402A;
+    --live:#2E6E63;
+    --display:"IBM Plex Sans Condensed",system-ui,sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      linear-gradient(var(--paper-2) 1px,transparent 1px),
+      linear-gradient(90deg,var(--paper-2) 1px,transparent 1px);
+    background-size:32px 32px;
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- header ---------- */
+  header{padding:40px 0 0}
+  .topbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .mark{font-family:var(--mono);font-size:13px;letter-spacing:.06em}
+  .mark b{font-weight:500}
+  .status{font-family:var(--mono);font-size:12px;color:var(--live);display:flex;align-items:center;gap:7px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--live);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 8px}
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(38px,7vw,74px);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    margin:0 0 22px;
+    max-width:16ch;
+  }
+  h1 em{font-style:normal;color:var(--signal)}
+  .lede{font-size:clamp(17px,2.2vw,20px);max-width:56ch;color:var(--ink-soft);margin:0}
+
+  /* ---------- diagram ---------- */
+  .diagram-scroll{overflow-x:auto;margin:56px 0 8px;padding-bottom:8px}
+  .diagram{min-width:620px;width:100%;height:auto;display:block}
+  .wire{fill:none;stroke:var(--rule);stroke-width:1.5}
+  .node-box{fill:var(--paper);stroke:var(--ink);stroke-width:1.75}
+  .node-label{font-family:var(--mono);font-size:16px;fill:var(--ink)}
+  .node-mid{font-family:var(--mono);font-size:15px;fill:var(--ink);letter-spacing:.1em}
+  .tick{font-family:var(--mono);font-size:12px;fill:var(--ink-soft);letter-spacing:.12em}
+  .pip{fill:var(--signal)}
+  @media (prefers-reduced-motion:reduce){
+    .pip{display:none}
+    .dot{animation:none}
+  }
+  .caption{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:center;margin:0 0 4px}
+
+  /* ---------- sections ---------- */
+  section{padding:72px 0}
+  .sec-head{border-top:1.5px solid var(--ink);padding-top:14px;margin-bottom:40px}
+  h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(24px,3.4vw,32px);
+    letter-spacing:-.01em;
+    margin:6px 0 0;
+  }
+
+  .cols{display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .col h3{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 8px}
+  .col p{margin:0;color:var(--ink-soft);font-size:16px}
+
+  /* ---------- work ---------- */
+  .job{
+    border-top:1px solid var(--rule);
+    padding:26px 0;
+    display:grid;
+    gap:6px 32px;
+    grid-template-columns:1fr;
+  }
+  .job:last-child{border-bottom:1px solid var(--rule)}
+  .job-client{font-family:var(--mono);font-size:12px;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase}
+  .job h3{font-family:var(--display);font-size:22px;font-weight:600;margin:0}
+  .job p{margin:4px 0 0;color:var(--ink-soft);font-size:16px;max-width:62ch}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .tag{
+    font-family:var(--mono);font-size:11px;letter-spacing:.05em;
+    border:1px solid var(--rule);padding:3px 8px;color:var(--ink-soft);
+  }
+  @media(min-width:760px){
+    .job{grid-template-columns:150px 1fr}
+    .job-client{padding-top:6px}
+  }
+
+  /* ---------- stack ---------- */
+  .stack{display:flex;flex-wrap:wrap;gap:10px 14px;font-family:var(--mono);font-size:14px;color:var(--ink-soft)}
+  .stack span::after{content:" /";color:var(--rule)}
+  .stack span:last-child::after{content:""}
+
+  /* ---------- contact ---------- */
+  .contact{border-top:1.5px solid var(--ink);padding:56px 0 90px}
+  .contact h2{margin-bottom:20px;max-width:20ch}
+  .cta{
+    display:inline-block;
+    font-family:var(--mono);font-size:15px;
+    background:var(--ink);color:var(--paper);
+    padding:14px 22px;text-decoration:none;
+    transition:background .18s ease;
+  }
+  .cta:hover{background:var(--signal)}
+  .links{margin-top:22px;font-family:var(--mono);font-size:14px;display:flex;gap:20px;flex-wrap:wrap}
+  .links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px}
+  .links a:hover{color:var(--signal);border-color:var(--signal)}
+  footer{font-family:var(--mono);font-size:12px;color:var(--ink-soft);padding-bottom:40px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="topbar">
+      <div class="mark"><b>HRIDOY ROZARIO</b> — INTEGRATION &amp; AUTOMATION ENGINEERING</div>
+      <div class="status"><span class="dot"></span>Available for freelance work</div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1>Your tools don't talk to each other. <em>I make them.</em></h1>
+    <p class="lede">I build the connective tissue between CRMs, databases and outreach systems — the syncs, pipelines and background jobs that move your data without anyone touching a spreadsheet.</p>
+  </div>
+
+  <div class="diagram-scroll">
+    <svg class="diagram" viewBox="0 0 800 300" role="img" aria-label="Diagram: HubSpot, Apollo and Shopify data flowing through a sync layer into Supabase, Salesforge and Google Sheets.">
+      <text class="tick" x="0" y="22">SOURCES</text>
+      <text class="tick" x="800" y="22" text-anchor="end">DESTINATIONS</text>
+
+      <path id="p1" class="wire" d="M190,64 C 272,64 292,150 352,150"/>
+      <path id="p2" class="wire" d="M190,150 L352,150"/>
+      <path id="p3" class="wire" d="M190,236 C 272,236 292,150 352,150"/>
+      <path id="p4" class="wire" d="M448,150 C 508,150 528,64 610,64"/>
+      <path id="p5" class="wire" d="M448,150 L610,150"/>
+      <path id="p6" class="wire" d="M448,150 C 508,150 528,236 610,236"/>
+
+      <text class="node-label" x="178" y="70" text-anchor="end">HubSpot</text>
+      <text class="node-label" x="178" y="156" text-anchor="end">Apollo</text>
+      <text class="node-label" x="178" y="242" text-anchor="end">Shopify</text>
+
+      <text class="node-label" x="622" y="70">Supabase</text>
+      <text class="node-label" x="622" y="156">Salesforge</text>
+      <text class="node-label" x="622" y="242">Sheets</text>
+
+      <rect class="node-box" x="352" y="120" width="96" height="60"/>
+      <text class="node-mid" x="400" y="156" text-anchor="middle">SYNC</text>
+
+      <circle class="pip" r="4.5"><animateMotion dur="3.4s" repeatCount="indefinite" begin="0s"><mpath href="#p1"/></animateMotion></circle>
+      <circle class="pip" r="4.5"><animateMotion dur="3.4s" repeatCount="indefinite" begin="1.1s"><mpath href="#p2"/></animateMotion></circle>
+      <circle class="pip" r="4.5"><animateMotion dur="3.4s" repeatCount="indefinite" begin="2.2s"><mpath href="#p3"/></animateMotion></circle>
+      <circle class="pip" r="4.5"><animateMotion dur="3.4s" repeatCount="indefinite" begin="1.7s"><mpath href="#p4"/></animateMotion></circle>
+      <circle class="pip" r="4.5"><animateMotion dur="3.4s" repeatCount="indefinite" begin="2.8s"><mpath href="#p5"/></animateMotion></circle>
+      <circle class="pip" r="4.5"><animateMotion dur="3.4s" repeatCount="indefinite" begin="0.5s"><mpath href="#p6"/></animateMotion></circle>
+    </svg>
+  </div>
+  <p class="caption">A typical build — running on a schedule, unattended.</p>
+
+  <section id="fix">
+    <div class="sec-head">
+      <div class="eyebrow">01 — What I'm usually called in for</div>
+      <h2>Three problems, over and over</h2>
+    </div>
+    <div class="cols">
+      <div class="col">
+        <h3>Data that won't move</h3>
+        <p>Two systems hold the same records and neither agrees with the other. I build the sync that settles it, with the edge cases handled and a log you can read.</p>
+      </div>
+      <div class="col">
+        <h3>A spreadsheet doing a database's job</h3>
+        <p>It worked at 200 rows. At 20,000 it's slow, fragile and one accidental sort away from a bad afternoon. I move it to a real backend without losing the workflow your team already knows.</p>
+      </div>
+      <div class="col">
+        <h3>Outreach that needs babysitting</h3>
+        <p>Someone manually enrolling contacts, checking suppression lists, copying sequence names between tools. That's a job for a scheduled function, not a person.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sec-head">
+      <div class="eyebrow">02 — Selected work</div>
+      <h2>Things I've built</h2>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Outreach automation</div>
+      <div>
+        <h3>Job-change triggered sequences</h3>
+        <p>When a contact moves to a new company, they become a warm lead at a cold account — but only for a few weeks. I built the detection and the automatic enrollment behind it: monitor the contact set for role changes, verify the move, and drop the person into the right sequence without anyone watching a feed.</p>
+        <div class="tags"><span class="tag">Supabase</span><span class="tag">TypeScript / Deno</span><span class="tag">HubSpot API</span><span class="tag">Apollo</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Data infrastructure</div>
+      <div>
+        <h3>Contact database and lookalike sets</h3>
+        <p>A structured database of prospects built from enrichment APIs rather than bought lists — profiles resolved and deduplicated, firmographics attached, and lookalike sets derived from accounts that already closed. Includes total-addressable-market analysis to size a segment before anyone spends on it.</p>
+        <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">Apollo API</span><span class="tag">LinkedIn data</span><span class="tag">Apps Script</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Observability</div>
+      <div>
+        <h3>Alerting for automation that breaks quietly</h3>
+        <p>Most automation fails silently — an API runs out of credits, a sync stops, and nobody notices for a week. I consolidated scattered alerts into a single channel and built a credit-usage dashboard that posts to Slack before the balance runs out, so the failure arrives as a warning rather than a missing month of data.</p>
+        <div class="tags"><span class="tag">Slack API</span><span class="tag">Supabase</span><span class="tag">Scheduled functions</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Pipeline orchestration</div>
+      <div>
+        <h3>A control table for scheduled jobs</h3>
+        <p>Once you have a dozen background functions, you need to know what runs when, what depends on what, and how to switch one off without redeploying. I build that as a managed trigger table — the schedule becomes data you can edit, not code you have to touch.</p>
+        <div class="tags"><span class="tag">Supabase</span><span class="tag">Postgres cron</span><span class="tag">Edge Functions</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Attribution</div>
+      <div>
+        <h3>Lead value passed back to ad platforms</h3>
+        <p>Booking events captured at the source, enriched with firmographic data, and sent back to Google Ads and Meta as conversions with a value attached — so the platforms optimise toward the leads worth having instead of counting every form fill the same.</p>
+        <div class="tags"><span class="tag">GTM</span><span class="tag">Meta CAPI</span><span class="tag">Zapier</span><span class="tag">dataLayer</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Internal tooling</div>
+      <div>
+        <h3>Reporting moved off spreadsheets</h3>
+        <p>An operations system that lived in linked Google Sheets, rebuilt on a real backend — deal data synced from the CRM, hours pulled from time tracking, and derived views that used to be recalculated by hand each morning now computed on a schedule.</p>
+        <div class="tags"><span class="tag">Supabase</span><span class="tag">TypeScript / Deno</span><span class="tag">HubSpot API</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="delivery">
+    <div class="sec-head">
+      <div class="eyebrow">03 — Ongoing delivery</div>
+      <h2>446 tickets closed for a multi-client consultancy</h2>
+    </div>
+    <p class="lede" style="margin-bottom:36px">Alongside project work, I handle a standing queue for a consultancy serving nonprofit and B2B clients — CRM builds, data cleanups and workflow automation, delivered ticket by ticket over several years.</p>
+
+    <div class="job">
+      <div class="job-client">Nonprofit CRM</div>
+      <div>
+        <h3>Fundraising pipeline architecture</h3>
+        <p>Built out the pipelines a fundraising team actually runs on — solicitation, pledged, donated, and acknowledgement stages — each with its own automation and reporting, replacing an inconsistent setup where gifts were tracked differently depending on who entered them.</p>
+        <div class="tags"><span class="tag">CRM configuration</span><span class="tag">Pipeline design</span><span class="tag">Data cleanup</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Nonprofit CRM</div>
+      <div>
+        <h3>Module cleanup and simplification</h3>
+        <p>Events, programs and outreach modules that had accumulated unused fields, dead workflows and duplicate records — audited, simplified and documented so the team could find what they needed without asking someone.</p>
+        <div class="tags"><span class="tag">CRM audit</span><span class="tag">Deduplication</span><span class="tag">Documentation</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Campaign operations</div>
+      <div>
+        <h3>Multi-phase campaign scheduling</h3>
+        <p>Annual campaign follow-up broken into phases with dependent deadlines, so each stage unlocks when the previous one completes rather than relying on someone remembering the sequence. Same pattern applied to recurring donor engagement tasks.</p>
+        <div class="tags"><span class="tag">Asana API</span><span class="tag">Task dependencies</span><span class="tag">Scheduling</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Document workflow</div>
+      <div>
+        <h3>E-signature and intake forms</h3>
+        <p>Signature workflows with fields pre-filled from existing records, and intake forms that write directly into the CRM instead of arriving as email to be retyped.</p>
+        <div class="tags"><span class="tag">Zoho Sign</span><span class="tag">Form automation</span><span class="tag">CRM sync</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Reporting</div>
+      <div>
+        <h3>Getting data in and out of a project tool</h3>
+        <p>Project management systems are good at holding work and bad at reporting on it. I move that data out on a schedule — into spreadsheets or a database — and push structured records back in, so status reporting stops being a manual export.</p>
+        <div class="tags"><span class="tag">Asana API</span><span class="tag">Apps Script</span><span class="tag">Scheduled sync</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cases">
+    <div class="sec-head">
+      <div class="eyebrow">04 — From the queue</div>
+      <h2>What those tickets actually contain</h2>
+    </div>
+    <p class="lede" style="margin-bottom:36px">A ticket is rarely "add a field". It's usually a process someone has been holding together from memory. These are ten of them, described without client names.</p>
+
+    <div class="job">
+      <div class="job-client">Community nonprofit</div>
+      <div>
+        <h3>Pledges that stop getting forgotten</h3>
+        <p>A pledge is a promise with a date on it, and the date is the part that gets lost. I split solicitation, pledges and received donations into separate pipelines that hand records to each other: commit to a pledge and the record is created with donor, family, campaign and solicitor already carried across. A week before the expected date it moves itself to <em>reminder needed</em> and a task lands on the solicitor. Thirty days past it with no payment, it's marked lapsed rather than sitting at 80% forever.</p>
+        <div class="tags"><span class="tag">Zoho CRM</span><span class="tag">Pipeline automation</span><span class="tag">Zoho Books</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Community nonprofit</div>
+      <div>
+        <h3>Interaction history as a real record</h3>
+        <p>Outreach staff were tracking relationships in task notes, so the history disappeared the moment a task was closed. I built a separate module for things that actually happened — a meal, a call, an event attended, a class — linked to the person, the household, the case manager and the event it came from. Tasks stayed what they are: future actions. Each case manager got a caseload view filtered to their own people and a next-seven-days follow-up list, so the contact record became the only screen they need open.</p>
+        <div class="tags"><span class="tag">Zoho CRM</span><span class="tag">Custom modules</span><span class="tag">Role-based views</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Community nonprofit</div>
+      <div>
+        <h3>One registration form, four linked records</h3>
+        <p>Family registration arrived as a form and left as retyping — a household, a parent, one record per child, and an enrolment to open. I mapped a single submission with a repeating child section onto all four, matched returning families on email so they update instead of duplicating, and gated the enrolment: it can't advance to <em>registered</em> until every child attached to it has verified forms. One child or five, the rule is the same.</p>
+        <div class="tags"><span class="tag">Zoho Forms</span><span class="tag">Record mapping</span><span class="tag">Deduplication</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Roofing contractor</div>
+      <div>
+        <h3>KPIs that reset when the period does</h3>
+        <p>The numbers existed, but every figure was rolling, so nobody could tell whether this week was better than last. I rebuilt the reporting around fixed periods — one snapshot tab per department, one trend view for the company — around metrics that are actually decisions: quoting turnaround in days, quote-to-job conversion, percentage of enquiries followed up, revenue per team day attended, and an aging view of invoices more than thirty days due.</p>
+        <div class="tags"><span class="tag">SmartSuite</span><span class="tag">Dashboards</span><span class="tag">Formula fields</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Roofing contractor</div>
+      <div>
+        <h3>Cleaning up automation that fights itself</h3>
+        <p>Years of additions had left automations referencing deleted fields, two rules writing to the same one, and a scheduling job creating a duplicate record every time it fired. I audited every automation across three solutions, removed the broken and the redundant, and made the record-creating ones check for an existing link first — update if it's there, create if it isn't. Then I tested the assignment-to-report-to-project chain end to end and documented what remained in a sheet the client can actually read.</p>
+        <div class="tags"><span class="tag">SmartSuite</span><span class="tag">Automation audit</span><span class="tag">Idempotency</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Roofing contractor</div>
+      <div>
+        <h3>Cold leads leave the pipeline on a clock</h3>
+        <p>Quotes that go quiet clog a pipeline and turn every conversion number into a lie. Now a sales record with its follow-ups done and no movement for 24 hours, or a repair sitting at <em>terms sent</em> for 72, copies itself into a nurture board with the client, address and a link back to the original, and leaves the pipeline. The nurture board tracks the last visit, call and seasonal email and calculates who's due next — so dormant accounts get a touchpoint instead of a reminder nobody opens.</p>
+        <div class="tags"><span class="tag">SmartSuite</span><span class="tag">Time-based triggers</span><span class="tag">Lifecycle routing</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Custom millwork shop</div>
+      <div>
+        <h3>Production stages that hand work along</h3>
+        <p>A won sale used to be re-entered by hand into production, and each shop stage was tracked wherever it happened to be tracked. I wired the handoffs: a sale marked won opens a confirmed project carrying scope, drawings, install dates and estimate; <em>ready for finishing</em> opens a finishing record with its own inspection checklist; completing it pushes the parent project forward and opens the next stage. Touch-ups notify the project manager when done, and a completed install opens a photography record so finished work actually gets shot.</p>
+        <div class="tags"><span class="tag">SmartSuite</span><span class="tag">Status handoffs</span><span class="tag">Checklists</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Custom millwork shop</div>
+      <div>
+        <h3>A parts catalogue an estimate can be built from</h3>
+        <p>Pricing lived in the owner's head and in a sheet of model numbers whose scheme encoded material, width, depth and height. I turned it into a structured catalogue — cabinets, doors, drawers, shelves, panels, mouldings and columns, each with its own pricing unit, per square foot, per linear foot or per piece — so a salesperson builds an estimate by selecting real parts. What comes out is a model-number list the drafter works from directly, instead of a quote that has to be translated.</p>
+        <div class="tags"><span class="tag">SmartSuite</span><span class="tag">Product schema</span><span class="tag">Estimating</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Interior design studio</div>
+      <div>
+        <h3>A CRM that looks like a spreadsheet and behaves like software</h3>
+        <p>A one-person studio didn't want to learn a CRM, so I built one inside the tool she already used. A dashboard is the only sheet she touches; the data sits in a hidden one behind it. Clicking <em>send intake</em> emails a pre-filled form; the submission creates the client's Drive folder, duplicates the contract template, merges in their name, budget and rooms in scope, writes the folder link back to the record and advances the status. Buttons lock after firing, so nobody gets the same email twice.</p>
+        <div class="tags"><span class="tag">Google Apps Script</span><span class="tag">Drive / Docs API</span><span class="tag">Gmail templates</span></div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-client">Healthcare staffing SaaS</div>
+      <div>
+        <h3>Contracts and billing that stop being retyped</h3>
+        <p>Signing a new facility meant typing the same entity details into an order form, an exhibit and an invoice. I mapped the signature documents back to the CRM — parent entity, state, address and signer on the order form; each facility's trading name, entity and monthly fee on the exhibit — and set up the subscription products behind it, with tiered pricing per facility type, room for a custom discount, and billing anchored to the month credentials go out. Contract signed now provisions the customer and a draft invoice in the accounting system, with the link written back to the record.</p>
+        <div class="tags"><span class="tag">Zoho Sign</span><span class="tag">Zoho CRM</span><span class="tag">QuickBooks</span><span class="tag">Zapier</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="sec-head">
+      <div class="eyebrow">05 — Tools</div>
+      <h2>What I work in</h2>
+    </div>
+    <div class="stack">
+      <span>Supabase</span><span>PostgreSQL</span><span>TypeScript</span><span>Deno</span>
+      <span>Google Apps Script</span><span>BigQuery</span><span>HubSpot</span><span>Zoho CRM</span>
+      <span>Pipedrive</span><span>Apollo</span><span>Salesforge</span><span>SmartSuite</span>
+      <span>Zapier</span><span>Make.com</span><span>Shopify APIs</span><span>GTM</span>
+      <span>Zoho Sign</span><span>QuickBooks</span>
+    </div>
+  </section>
+
+  <div class="contact" id="contact">
+    <div class="eyebrow">06 — Get in touch</div>
+    <h2>Tell me what's broken.</h2>
+    <p class="lede" style="margin-bottom:28px">Send over the problem and I'll tell you how I'd approach it and what it would cost. Most projects are fixed-price and take a week or two.</p>
+    <a class="cta" href="mailto:hridoy@failloudly.com">Start a conversation →</a>
+    <div class="links">
+      <a href="mailto:hridoy@failloudly.com">hridoy@failloudly.com</a>
+      <a href="https://www.linkedin.com/in/hridoy-rozario-b93369140/">LinkedIn</a>
+      <a href="https://github.com/hridoyanthonyr-cmd">GitHub</a>
+      <a href="https://www.upwork.com/freelancers/~0170f592412dd03e5c">Upwork</a>
+    </div>
+  </div>
+
+  <footer>
+    <p style="margin:0 0 6px">failloudly.com — named after the first rule: a system should tell you when it breaks.</p>
+    <p style="margin:0">Montpellier, France — working with clients across Europe and North America.</p>
+  </footer>
+</div>
+
+</body>
+</html>
