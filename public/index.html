@@ -160,31 +160,6 @@
   .sys{background:var(--panel);padding:13px 16px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim)}
   .sys i{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
 
-  /* intake */
-  .intake{margin-top:30px}
-  .intake .step{color:var(--ink-faint)}
-  .intake-body{padding:18px;display:flex;flex-direction:column;gap:14px;min-height:210px}
-  .qline{font-family:var(--mono);font-size:13px;color:var(--ink-dim);display:flex;gap:9px;align-items:flex-start}
-  .qline b{color:var(--alert);font-weight:700;flex:none}
-  .qline.answered b{color:var(--ok)}
-  .qline .ans{color:var(--ink);display:block;margin-top:3px;overflow-wrap:anywhere}
-  .qline .qt{display:block}
-  .field-in{display:flex;flex-direction:column;gap:10px}
-  .intake input,.intake textarea{width:100%;background:var(--ground);border:1px solid var(--line);color:var(--ink);
-    font-family:var(--mono);font-size:13px;padding:11px 12px;border-radius:0;resize:vertical}
-  .intake textarea{min-height:74px;line-height:1.6}
-  .intake input:focus,.intake textarea:focus{outline:none;border-color:var(--alert)}
-  .opts{display:flex;flex-wrap:wrap;gap:8px}
-  .opt{font-family:var(--mono);font-size:12px;background:var(--ground);border:1px solid var(--line);
-    color:var(--ink-dim);padding:8px 12px;cursor:pointer;transition:border-color .14s ease,color .14s ease}
-  .opt:hover{border-color:var(--ink-faint);color:var(--ink)}
-  .opt[aria-pressed="true"]{border-color:var(--alert);color:var(--alert)}
-  .rowbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .hint{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
-  .summary{background:var(--ground);border:1px solid var(--line);padding:14px;font-family:var(--mono);
-    font-size:12.5px;line-height:1.7;color:var(--ink-dim);white-space:pre-wrap;overflow-wrap:anywhere;max-height:230px;overflow:auto}
-  .btn.copy.done,.btn.done{border-color:var(--ok);color:var(--ok)}
-
   /* booking */
   .orline{display:flex;align-items:center;gap:16px;margin:38px 0 22px;scroll-margin-top:74px;font-family:var(--mono);
     font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
@@ -221,72 +196,31 @@
   .modal-foot a{color:var(--ink-dim)}
   .modal-foot a:hover{color:var(--alert)}
 
-  /* chat */
-  .chat-launch{position:fixed;right:20px;bottom:20px;z-index:70;display:flex;align-items:center;gap:9px;
-    background:var(--alert);color:#16110A;border:0;font-family:var(--mono);font-size:13px;font-weight:700;
-    padding:13px 17px;cursor:pointer;box-shadow:0 12px 34px rgba(0,0,0,.5)}
-  .chat-launch:hover{filter:brightness(1.08)}
-  .chat-launch i{width:8px;height:8px;border-radius:50%;background:#16110A;animation:blink 1.6s steps(2,end) infinite}
-  .chat-launch[hidden]{display:none}
-  .chat{position:fixed;right:20px;bottom:20px;z-index:75;width:min(384px,calc(100vw - 32px));
-    height:min(576px,calc(100vh - 40px));background:var(--panel);border:1px solid var(--line);
-    display:none;flex-direction:column;box-shadow:0 22px 64px rgba(0,0,0,.6)}
-  .chat.open{display:flex}
-  .chat-head{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid var(--line);
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-dim)}
-  .chat-head .who{display:flex;flex-direction:column;gap:2px}
-  .chat-head .who b{color:var(--ink);font-weight:700;letter-spacing:.02em}
-  .chat-head .who span{color:var(--ok);font-size:10.5px;display:flex;align-items:center;gap:6px}
-  .chat-head .who span i{width:6px;height:6px;border-radius:50%;background:var(--ok)}
-  .chat-head .x{margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink-faint);
-    font-family:var(--mono);font-size:14px;line-height:1;padding:6px 10px;cursor:pointer}
-  .chat-head .x:hover{border-color:var(--crit);color:var(--crit)}
-  .chat-log{flex:1;overflow-y:auto;padding:15px 14px;display:flex;flex-direction:column;gap:9px}
-  .b{max-width:87%;font-size:14px;line-height:1.55;padding:10px 13px;border:1px solid var(--line);
-    animation:pop .22s ease;overflow-wrap:anywhere}
-  @keyframes pop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-  .b.bot{background:var(--panel-2);color:var(--ink);align-self:flex-start}
-  .b.me{background:var(--alert);color:#16110A;border-color:var(--alert);align-self:flex-end;font-weight:500}
-  .b.note{background:transparent;border-style:dashed;color:var(--ink-faint);font-family:var(--mono);
-    font-size:12px;align-self:flex-start;max-width:100%;white-space:pre-wrap;line-height:1.65}
-  .b b{font-weight:700}
-  .typing{align-self:flex-start;display:flex;gap:5px;padding:13px 14px;background:var(--panel-2);border:1px solid var(--line)}
-  .typing i{width:5px;height:5px;border-radius:50%;background:var(--ink-faint);animation:bob 1.05s infinite}
-  .typing i:nth-child(2){animation-delay:.16s} .typing i:nth-child(3){animation-delay:.32s}
-  @keyframes bob{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
-  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}
-  .chip-b{font-family:var(--mono);font-size:11.5px;background:transparent;border:1px solid var(--line);
-    color:var(--ink-dim);padding:7px 10px;cursor:pointer;text-align:left;transition:border-color .14s,color .14s}
-  .chip-b:hover{border-color:var(--alert);color:var(--alert)}
-  .chip-b.go{border-color:rgba(232,145,58,.5);color:var(--alert)}
-  .chat-in{display:flex;border-top:1px solid var(--line)}
-  .chat-in input{flex:1;min-width:0;background:var(--ground);border:0;color:var(--ink);
-    font-family:var(--sans);font-size:14px;padding:13px 14px}
-  .chat-in input:focus{outline:none}
-  .chat-in button{background:var(--panel-2);border:0;border-left:1px solid var(--line);color:var(--alert);
-    font-family:var(--mono);font-size:12px;font-weight:700;padding:0 15px;cursor:pointer}
-  .chat-in button:hover{background:var(--line)}
-  @media(max-width:600px){
-    .chat{right:0;bottom:0;width:100vw;height:100dvh;border:0}
-    .chat-launch{right:14px;bottom:14px}
-    .modal{padding:0}
-    .modal-card{max-height:100vh;height:100dvh}
-    .modal-body iframe{height:760px}
-  }
+  /* channels */
+  .channels{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:1fr;margin-top:34px}
+  @media(min-width:820px){ .channels{grid-template-columns:repeat(2,1fr)} }
+  .chan{background:var(--panel);padding:26px 24px;display:flex;flex-direction:column;gap:12px}
+  .chan .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--ink-faint);display:flex;align-items:center;gap:8px}
+  .chan .k i{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:none}
+  .chan h3{font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .chan p{color:var(--ink-dim);font-size:15px;flex:1}
+  .chan .btn{align-self:flex-start}
 
   /* contact */
   .contact{margin-top:96px;border-top:1px solid var(--line);padding:56px 0 0;scroll-margin-top:60px}
   .contact h2{font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;max-width:18ch;text-wrap:balance}
-  .contact p{color:var(--ink-dim);max-width:54ch;margin-top:16px}
-  .addrline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:34px}
-  .addr-label{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
-  .addr{font-family:var(--mono);font-size:clamp(16px,2.2vw,21px);font-weight:500;color:var(--alert);
-    text-decoration:none;border-bottom:1px solid rgba(232,145,58,.35);padding-bottom:3px;overflow-wrap:anywhere}
-  .addr:hover{border-bottom-color:var(--alert)}
-  .links{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-family:var(--mono);font-size:13px}
+  .contact p.sub{color:var(--ink-dim);max-width:56ch;margin-top:16px}
+  .links{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;font-family:var(--mono);font-size:13px}
   .links a{color:var(--ink-dim);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px}
   .links a:hover{color:var(--alert);border-color:var(--alert)}
   footer{padding:56px 0 48px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);line-height:1.9}
+
+  @media(max-width:600px){
+    .modal{padding:0}
+    .modal-card{max-height:100vh;height:100dvh}
+    .modal-body iframe{height:760px}
+  }
 
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
@@ -640,7 +574,7 @@
     <div class="sec-head"><h2>How the work runs</h2><span class="tag">four steps</span></div>
     <p class="intro">The same sequence whether it's a $250 repair or a $3,200 migration. The point of it is that you know the number and the shape of the thing before I write anything.</p>
     <div class="steps">
-      <div class="step-c"><div class="n">01</div><h3>You describe it</h3><p>Through the intake below or a scoped call. What you're trying to build, or what's failing, and what it's costing while it's broken.</p></div>
+      <div class="step-c"><div class="n">01</div><h3>You describe it</h3><p>Through the chat or a scoped call. What you're trying to build, or what's failing, and what it's costing while it's broken.</p></div>
       <div class="step-c"><div class="n">02</div><h3>I scope it in writing</h3><p>What I'll build, what it will and won't do, what I need from you, the fixed price and the date. You approve it before anything begins.</p></div>
       <div class="step-c"><div class="n">03</div><h3>I build in the open</h3><p>Progress where you can see it, in your tools. You test as it goes rather than at the end, so surprises arrive early and cheap.</p></div>
       <div class="step-c"><div class="n">04</div><h3>Handover with alarms on</h3><p>Documentation, admin access, and monitoring on every job. If something fails afterwards, you find out from the system, not from a customer.</p></div>
@@ -668,24 +602,22 @@
   </section>
   <section class="contact" id="contact">
     <h2>Tell me what's breaking, or what you need built.</h2>
-    <p>Five questions, about ninety seconds. Answer them here and you'll have a reply with a scope and a fixed price within one working day. The chat in the corner does the same thing and will answer questions while you're at it.</p>
+    <p class="sub">Two ways in. Message me and I'll answer myself — if I'm at my desk it's a live conversation, and if I'm not it reaches me as a ticket and I reply within one working day. Or put a time straight in my calendar.</p>
 
-    <div class="console intake" id="intake">
-      <div class="console-head">
-        <span>intake · new project</span>
-        <span class="step" id="stepcount">1 / 5</span>
+    <div class="channels">
+      <div class="chan">
+        <div class="k"><i></i>chat</div>
+        <h3>Message me now</h3>
+        <p>Describe the system you need or the thing that's failing. No form to fill in first — just tell me what's going on and I'll tell you whether it's a $250 fix or a $3,200 build.</p>
+        <button type="button" class="btn primary" id="startchat">Open the chat →</button>
       </div>
-      <div class="intake-body" id="ibody">
-        <div class="qline"><b>&gt;</b><span class="qt">Loading intake…</span></div>
+
+      <div class="chan">
+        <div class="k"><i></i>calendar</div>
+        <h3>Book 30 minutes</h3>
+        <p>Screen shared, no slides. You walk me through the stack, I tell you what I'd change and what it costs. Live availability, booked the moment you pick a slot.</p>
+        <button type="button" class="btn book-btn" data-ctx="General enquiry">Open the calendar →</button>
       </div>
-      <div class="console-foot">Nothing is stored on this page. Your answers go to me and nowhere else.</div>
-    </div>
-
-    <div class="orline" id="book">or pick a time</div>
-
-    <div class="book">
-      <p>Rather talk it through first? My live calendar is a click away — 30 or 60 minutes, screen shared, and you leave knowing what the work actually involves.</p>
-      <button type="button" class="btn primary book-btn" data-ctx="General enquiry">Open the calendar →</button>
     </div>
 
     <div class="links">
@@ -724,63 +656,39 @@
   </div>
 </div>
 
-<!-- chat -->
-<button type="button" class="chat-launch" id="launch" aria-haspopup="dialog"><i></i>Ask me anything</button>
-
-<div class="chat" id="chat" role="dialog" aria-modal="false" aria-label="Chat with Hridoy's assistant">
-  <div class="chat-head">
-    <div class="who">
-      <b>failloudly · assistant</b>
-      <span><i></i>Hridoy usually replies within a day</span>
-    </div>
-    <button type="button" class="x" id="chatx" aria-label="Close chat">✕</button>
-  </div>
-  <div class="chat-log" id="chatlog" aria-live="polite"></div>
-  <div class="chips" id="chatchips"></div>
-  <form class="chat-in" id="chatform" autocomplete="off">
-    <input id="chatinput" type="text" placeholder="Type your message…" aria-label="Your message">
-    <button type="submit">SEND</button>
-  </form>
-</div>
-
 <!--
-  LIVE CHAT HANDOVER (optional, 5 minutes to enable)
-  ------------------------------------------------------------------
-  The assistant above answers questions and collects project details with no
-  server and no third party. If you also want to jump into conversations
-  yourself in real time, add one free widget below — it sits in the corner
-  alongside this one:
+  ============================================================
+  LIVE CHAT — tawk.to
+  ============================================================
+  Replace TAWK_EMBED_ID below with the id from your own account:
 
-    Crisp   — https://crisp.chat        free plan, iOS/Android/desktop apps
-    Tawk.to — https://www.tawk.to       free, unlimited agents
+    1. tawk.to → sign up → it creates a Property for failloudly.com
+    2. Administration → Chat Widget → copy the embed src, which looks like
+       https://embed.tawk.to/6xxxxxxxxxxxxxxxxxxxxxxx/1abcdefgh
+    3. Paste everything after embed.tawk.to/ into TAWK_EMBED_ID
+    4. Commit and push
 
-  Paste their snippet directly under this comment. Nothing else changes.
+  Worth setting while you are in there:
+    Administration → Chat Widget → Appearance
+      Colour  #E8913A   ·  Position  bottom right  ·  Theme  dark
+    Administration → Chat Widget → Content → Pre-chat form
+      Turn it ON and ask: name, email, "What do you need built or fixed?"
+      That is what replaces the intake form — it collects the same details.
+    Administration → Property Settings → Offline
+      Set an away message so nobody thinks the chat is broken when you sleep.
+    Install the iOS or Android app and turn notifications on, otherwise a
+    live chat sits unanswered.
 
-  KNOWING WHY SOMEONE BOOKED
-  ------------------------------------------------------------------
-  The booking modal shows what the visitor clicked from and offers them a note
-  to paste. To make that mandatory rather than optional, open Google Calendar →
-  your appointment schedule → Booking form → Add a custom question, e.g.
-  "What do you want to cover?" and "Which tools are involved?". Those answers
-  then arrive with every booking automatically.
-
-  DELIVERY OF INTAKE ANSWERS
-  ------------------------------------------------------------------
-  By default the intake hands the visitor their message and opens their own mail
-  client addressed to you. To receive submissions silently instead — with no
-  address exposed anywhere — create a free endpoint at https://formspree.io or
-  https://web3forms.com and paste its URL into FORM_ENDPOINT at the top of the
-  script below.
+  Until the id is set, the "Open the chat" button says so instead of
+  silently doing nothing.
 -->
+<script>
+  window.TAWK_EMBED_ID = "6a897423cd95413441af6eff/1k0kerais";
+</script>
 <script>
 (function(){
   'use strict';
 
-  /* Server endpoint that emails the enquiry to Hridoy and a copy to the
-     sender. Handled by src/index.js in this repo. If it ever fails, the
-     intake falls back to opening the visitor's own mail client. */
-  var FORM_ENDPOINT = '/api/intake';
-  var MAIL_TO = 'hridoy' + '@' + 'failloudly.com';
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -863,204 +771,6 @@
     }
   }
 
-  /* ---------- intake ---------- */
-  var STEPS = [
-    { id:'problem', label:'The problem', type:'textarea',
-      q:'What do you need built, or what is going wrong?',
-      ph:'e.g. Our CRM and accounting system disagree about which invoices are paid, and someone reconciles them by hand every Monday.' },
-    { id:'tools', label:'Tools involved', type:'multi',
-      q:'Which tools are involved?',
-      options:['Zoho','SmartSuite','HubSpot','Salesforce','Freshsales','Airtable','Supabase / Postgres','Google Sheets','Xero / QuickBooks','Shopify','Make / Zapier','Something else'] },
-    { id:'since', label:'Current state', type:'single',
-      q:'Where are you with it right now?',
-      options:['Nothing built yet','Built, but it is not working right','Working, but held together by hand','Broken and costing us now'] },
-    { id:'cost', label:'Cost of the problem', type:'textarea',
-      q:'What is this costing you today — hours, money, or trust in the numbers?',
-      ph:'e.g. About 6 hours a week between two people, and we invoiced a client twice last month.' },
-    { id:'email', label:'Reply address', type:'email',
-      q:'Where should I send my reply?',
-      ph:'you@company.com' }
-  ];
-
-  var body = document.getElementById('ibody');
-  var stepcount = document.getElementById('stepcount');
-  if (!body) return;
-
-  var answers = {}, cur = 0, picked = [];
-
-  function esc(s){
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  function history(){
-    var out = '';
-    for (var i = 0; i < cur; i++) {
-      var s = STEPS[i];
-      out += '<div class="qline answered"><b>✓</b><span class="qt">' + esc(s.q)
-           + '<span class="ans">' + esc(answers[s.id] || '—') + '</span></span></div>';
-    }
-    return out;
-  }
-
-  function render(){
-    if (cur >= STEPS.length) { finish(); return; }
-    var s = STEPS[cur];
-    if (stepcount) stepcount.textContent = (cur + 1) + ' / ' + STEPS.length;
-    picked = [];
-
-    var input = '';
-    if (s.type === 'textarea') {
-      input = '<textarea id="fin" rows="3" placeholder="' + esc(s.ph) + '"></textarea>';
-    } else if (s.type === 'email') {
-      input = '<input id="fin" type="email" inputmode="email" autocomplete="email" placeholder="' + esc(s.ph) + '">';
-    } else {
-      var opts = s.options.map(function(o, i){
-        return '<button type="button" class="opt" data-i="' + i + '" aria-pressed="false">' + esc(o) + '</button>';
-      }).join('');
-      input = '<div class="opts">' + opts + '</div>';
-    }
-
-    var hint = s.type === 'multi' ? '<span class="hint">pick as many as apply</span>'
-             : s.type === 'single' ? '<span class="hint">pick one</span>' : '';
-
-    body.innerHTML = history()
-      + '<div class="qline"><b>&gt;</b><span class="qt">' + esc(s.q) + '</span></div>'
-      + '<div class="field-in">' + input
-      + '<div class="rowbtns"><button type="button" class="btn primary" id="next">'
-      + (cur === STEPS.length - 1 ? 'Finish →' : 'Next →') + '</button>'
-      + (cur > 0 ? '<button type="button" class="btn" id="back">Back</button>' : '')
-      + hint + '</div></div>';
-
-    var fin = document.getElementById('fin');
-    if (fin) {
-      fin.focus({ preventScroll: true });
-      fin.addEventListener('keydown', function(ev){
-        if (ev.key === 'Enter' && (s.type === 'email' || ev.metaKey || ev.ctrlKey)) {
-          ev.preventDefault(); advance();
-        }
-      });
-    }
-
-    Array.prototype.forEach.call(body.querySelectorAll('.opt'), function(btn){
-      btn.addEventListener('click', function(){
-        var i = btn.getAttribute('data-i');
-        if (s.type === 'single') {
-          Array.prototype.forEach.call(body.querySelectorAll('.opt'), function(b){ b.setAttribute('aria-pressed','false'); });
-          picked = [i];
-          btn.setAttribute('aria-pressed','true');
-          setTimeout(advance, 160);
-        } else {
-          var at = picked.indexOf(i);
-          if (at === -1) { picked.push(i); btn.setAttribute('aria-pressed','true'); }
-          else { picked.splice(at,1); btn.setAttribute('aria-pressed','false'); }
-        }
-      });
-    });
-
-    var nx = document.getElementById('next');
-    if (nx) nx.addEventListener('click', advance);
-    var bk = document.getElementById('back');
-    if (bk) bk.addEventListener('click', function(){ cur--; render(); });
-  }
-
-  function advance(){
-    var s = STEPS[cur];
-    var val;
-    if (s.type === 'multi' || s.type === 'single') {
-      if (!picked.length) return;
-      val = picked.map(function(i){ return s.options[i]; }).join(', ');
-    } else {
-      var fin = document.getElementById('fin');
-      val = fin ? fin.value.trim() : '';
-      if (!val) { if (fin) fin.focus(); return; }
-      if (s.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-        fin.style.borderColor = '#D25A4E'; fin.focus(); return;
-      }
-    }
-    answers[s.id] = val;
-    cur++;
-    render();
-  }
-
-  function message(){
-    var lines = ['New project enquiry via failloudly.com', ''];
-    STEPS.forEach(function(s){
-      lines.push(s.label.toUpperCase());
-      lines.push(answers[s.id] || '—');
-      lines.push('');
-    });
-    return lines.join('\n');
-  }
-
-  function finish(){
-    if (stepcount) stepcount.textContent = 'complete';
-    var msg = message();
-    var subject = 'New project — ' + (answers.since || 'enquiry');
-    var mailto = 'mailto:' + MAIL_TO + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(msg);
-
-    var sendBtn = FORM_ENDPOINT
-      ? '<button type="button" class="btn primary" id="send">Send it to me →</button>'
-      : '<a class="btn primary" id="send" href="' + mailto + '">Send it to me →</a>';
-    var payload = {
-      source: 'site intake',
-      subject: subject,
-      email: answers.email,
-      message: msg,
-      answers: answers,
-      _hp: ''
-    };
-
-    body.innerHTML = history()
-      + '<div class="qline answered"><b>✓</b><span class="qt">That is everything I need to give you a scope and a price.</span></div>'
-      + '<div class="summary" id="sum">' + esc(msg) + '</div>'
-      + '<div class="rowbtns">' + sendBtn
-      + '<button type="button" class="btn copy" id="copy">Copy the message</button>'
-      + '<button type="button" class="btn" id="restart">Start over</button>'
-      + '<span class="hint" id="sendhint">reply within one working day</span></div>';
-
-    if (FORM_ENDPOINT) {
-      document.getElementById('send').addEventListener('click', function(){
-        var b = this, hint = document.getElementById('sendhint');
-        b.disabled = true; b.textContent = 'Sending…';
-        fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
-        }).then(function(r){
-          if (!r.ok) throw new Error('bad status');
-          b.textContent = 'Sent ✓'; b.classList.add('done');
-          if (hint) hint.textContent = 'On its way. A copy is in your inbox — reply within one working day.';
-        }).catch(function(){
-          b.disabled = false;
-          b.outerHTML = '<a class="btn primary" href="' + mailto + '">Send it by email →</a>';
-          if (hint) hint.textContent = 'Could not send it for you — this sends it from your own mail app instead.';
-        });
-      });
-    }
-
-    document.getElementById('copy').addEventListener('click', function(){
-      var b = this;
-      function done(){ b.textContent = 'Copied ✓'; b.classList.add('done');
-        setTimeout(function(){ b.textContent = 'Copy the message'; b.classList.remove('done'); }, 2200); }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(msg).then(done, fallback);
-      } else fallback();
-      function fallback(){
-        var ta = document.createElement('textarea');
-        ta.value = msg; ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); done(); } catch(e) {}
-        document.body.removeChild(ta);
-      }
-    });
-
-    document.getElementById('restart').addEventListener('click', function(){
-      answers = {}; cur = 0; render();
-    });
-  }
-
-  render();
 })();
 </script>
 
@@ -1127,348 +837,40 @@
   });
 })();
 
-/* ---------- assistant ---------- */
+
+/* ---------- live chat (tawk.to) ---------- */
 (function(){
   'use strict';
-  var launch = document.getElementById('launch');
-  var panel  = document.getElementById('chat');
-  var log    = document.getElementById('chatlog');
-  var chips  = document.getElementById('chatchips');
-  var form   = document.getElementById('chatform');
-  var input  = document.getElementById('chatinput');
-  if (!launch || !panel) return;
+  var id = window.TAWK_EMBED_ID || '';
+  var configured = id && id !== 'TAWK_EMBED_ID';
+  var btn = document.getElementById('startchat');
 
-  var MAIL_TO = 'hridoy' + '@' + 'failloudly.com';
-  var ENDPOINT = '/api/intake';
-  var started = false, busy = false, lastMessage = '', lastMailto = '';
-  var mode = 'chat', step = 0, picked = [];
-  var A = {};
-
-  var QUESTIONS = [
-    { id:'problem', label:'The problem', type:'text',
-      q:'Tell me what you need built, or what is going wrong. A couple of sentences is plenty.' },
-    { id:'tools', label:'Tools involved', type:'multi',
-      q:'Which tools are involved? Tap all that apply, then hit Done.',
-      options:['Zoho','SmartSuite','HubSpot','Salesforce','Freshsales','Airtable','Supabase / Postgres','Google Sheets','Xero / QuickBooks','Shopify','Make / Zapier','Something else'] },
-    { id:'since', label:'Current state', type:'single',
-      q:'Where are you with it right now?',
-      options:['Nothing built yet','Built, but not working right','Working, but held together by hand','Broken and costing us now'] },
-    { id:'cost', label:'Cost of the problem', type:'text',
-      q:'What is this costing you today — hours, money, or trust in the numbers?' },
-    { id:'email', label:'Reply address', type:'text',
-      q:'Last one: where should Hridoy send his reply?' }
-  ];
-
-  var MENU = [
-    ['What does he build?', 'build'],
-    ['How much does it cost?', 'price'],
-    ['Book a call', 'book'],
-    ['Start a project', 'start']
-  ];
-
-  var ANSWERS = {
-    build: "Three kinds of work. **New systems** — CRM architecture in Zoho One or SmartSuite, a Postgres database behind a sales team, workflows where each stage opens the next. **Connections** — two tools holding the same records and disagreeing, or a spreadsheet doing a database's job. **Repairs** — automation that broke quietly and nobody noticed.\n\nTen of the twelve projects in the work log above are builds, not repairs.",
-    price: "Published, and fixed wherever the work has a known shape.\n\n• Scoped calls — $45 (30 min) to $100 (architecture session)\n• Integrations — from $300\n• CRM builds — from $600, migrations to $3,200\n• Audit &amp; repair — from $250\n• Database and reporting — from $500\n• Ongoing support — $55–60/hr, no retainer\n\nEvery fixed price is agreed in writing before any work starts.",
-    time: "It depends on the shape, but roughly: a single broken workflow is usually a few days. An integration between two systems is one to two weeks. A full CRM build or migration runs three to six weeks, with you testing as it goes rather than at the end.\n\nYou get the date in writing along with the price, before anything begins.",
-    stack: "Daily: Zoho One and Zoho CRM, SmartSuite, HubSpot, Freshsales, Salesforce, Supabase and PostgreSQL, BigQuery, Google Apps Script, Python, Node.js, REST APIs and webhooks, Make and Zapier, Xero, Shopify.\n\nIf your stack isn't on that list it's usually still fine — most of this work is API-shaped.",
-    repair: "That's the repair track. It starts with an audit: every rule, function and connection mapped, conflicts listed, and the actual root cause named rather than guessed at.\n\nFrom $250 for a single broken workflow, $500 for a full platform audit. Whatever gets fixed also gets monitoring, so the next failure arrives as an alert instead of a surprise.",
-    about: "Hridoy Rozario — integration and automation engineer, based in Montpellier, France, working across US, UK, EU and Australian time zones.\n\nSix years freelance, 51 contracts, 6,762 hours billed, 100% job success and Top Rated on Upwork. 446 tickets closed on one consultancy's standing queue.",
-    who: "I'm the assistant on Hridoy's site — a scripted one, so I'm honest about it. I can answer questions about the work and prices, and I can take your project details straight to him.\n\nHe replies himself, usually within a working day."
-  };
-
-  var INTENTS = [
-    [/\b(book|call|meet|meeting|schedule|appointment|calendar|talk to)\b/i, 'book'],
-    [/\b(price|pricing|cost|rate|charge|fee|budget|how much|expensive|quote)\b/i, 'price'],
-    [/\b(how long|timeline|time frame|timeframe|deadline|how fast|when can|duration|lead time)\b/i, 'time'],
-    [/\b(zoho|smartsuite|hubspot|salesforce|freshsales|supabase|postgres|airtable|xero|shopify|zapier|make|apps script|python|api|stack|tool|tools|integrat)/i, 'stack'],
-    [/\b(broken|break|fix|fail|failing|error|bug|duplicate|not working|stopped|sync issue|audit)\b/i, 'repair'],
-    [/\b(start|hire|work with|project|quote me|get going|engage|onboard)\b/i, 'start'],
-    [/\b(build|builds|new system|crm|database|automat)/i, 'build'],
-    [/\b(who are you|are you a bot|are you real|human|chatbot|assistant)\b/i, 'who'],
-    [/\b(who is|about him|experience|background|years|upwork|linkedin|where.*based|located)\b/i, 'about'],
-    [/^(hi|hey|hello|yo|good (morning|afternoon|evening))\b/i, 'hello']
-  ];
-
-  function esc(s){
-    return String(s).replace(/&(?!amp;)/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  if (configured) {
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_LoadStart = new Date();
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://embed.tawk.to/' + id;
+    s.charset = 'UTF-8';
+    s.setAttribute('crossorigin', '*');
+    document.head.appendChild(s);
   }
-  function fmt(s){
-    return esc(s).replace(/&amp;amp;/g,'&amp;')
-                 .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
-                 .replace(/\n/g,'<br>');
-  }
-  function scroll(){ log.scrollTop = log.scrollHeight; }
 
-  function bubble(html, cls){
-    var d = document.createElement('div');
-    d.className = 'b ' + (cls || 'bot');
-    d.innerHTML = html;
-    log.appendChild(d); scroll();
-    return d;
-  }
-  function me(text){ bubble(esc(text), 'me'); }
+  if (!btn) return;
 
-  function bot(text, then){
-    busy = true; chips.innerHTML = '';
-    var t = document.createElement('div');
-    t.className = 'typing';
-    t.innerHTML = '<i></i><i></i><i></i>';
-    log.appendChild(t); scroll();
-    var wait = Math.min(1100, 260 + String(text).length * 7);
+  btn.addEventListener('click', function(){
+    if (configured && window.Tawk_API && typeof window.Tawk_API.maximize === 'function') {
+      window.Tawk_API.maximize();
+      return;
+    }
+    // Chat not available — say so rather than doing nothing.
+    btn.disabled = true;
+    btn.textContent = configured ? 'Chat is still loading — one moment' : 'Chat is not connected yet';
     setTimeout(function(){
-      t.remove();
-      bubble(fmt(text), 'bot');
-      busy = false;
-      if (then) then();
-    }, wait);
-  }
-
-  function setChips(list){
-    chips.innerHTML = '';
-    (list || []).forEach(function(c){
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'chip-b' + (c[2] ? ' go' : '');
-      b.textContent = c[0];
-      b.addEventListener('click', function(){ chipClick(c); });
-      chips.appendChild(b);
-    });
-    scroll();
-  }
-
-  function menu(){
-    setChips(MENU.map(function(m, i){ return [m[0], m[1], i === 3]; }));
-  }
-
-  function chipClick(c){
-    if (busy) return;
-    if (mode === 'intake') { answer(c[0]); return; }
-    me(c[0]);
-    route(c[1]);
-  }
-
-  function route(intent){
-    if (intent === 'book') {
-      bot("Opening the calendar now — pick any slot that works. I've tagged it with what we've talked about so Hridoy knows what to prepare.", function(){
-        window.openBooking(A.problem ? A.problem.slice(0, 90) : 'Question from the site chat');
-        menu();
-      });
-      return;
-    }
-    if (intent === 'start') { beginIntake(); return; }
-    if (intent === 'hello') {
-      bot("Hello. Ask me about the work, the prices, or how long something takes — or tell me what you need and I'll pass it straight to Hridoy.", menu);
-      return;
-    }
-    if (ANSWERS[intent]) {
-      bot(ANSWERS[intent], function(){
-        if (intent === 'price') setChips([['Book a call','book'],['Start a project','start',true],['How long does it take?','time']]);
-        else if (intent === 'repair') setChips([['Start a project','start',true],['Book a call','book'],['How much?','price']]);
-        else menu();
-      });
-      return;
-    }
-    bot("That one is better answered by Hridoy himself than by me. Give me the details and he'll come back to you within a working day — or book a call and ask him live.", function(){
-      setChips([['Give him the details','start',true],['Book a call','book']]);
-    });
-  }
-
-  function detect(text){
-    for (var i = 0; i < INTENTS.length; i++) if (INTENTS[i][0].test(text)) return INTENTS[i][1];
-    return null;
-  }
-
-  /* ----- intake inside the chat ----- */
-  function beginIntake(){
-    mode = 'intake'; step = 0; picked = []; A = {};
-    bot("Good. Five short questions and Hridoy will have everything he needs to send you a scope and a fixed price.", ask);
-  }
-
-  function ask(){
-    var q = QUESTIONS[step];
-    bot(q.q, function(){
-      if (q.type === 'multi') {
-        var list = q.options.map(function(o){ return [o, o]; });
-        list.push(['Done ✓', '__done', true]);
-        setChips(list);
-        input.placeholder = 'or type them instead…';
-      } else if (q.type === 'single') {
-        setChips(q.options.map(function(o){ return [o, o]; }));
-        input.placeholder = 'or type your own…';
-      } else {
-        chips.innerHTML = '';
-        input.placeholder = q.id === 'email' ? 'you@company.com' : 'Type your answer…';
-        input.focus();
-      }
-    });
-  }
-
-  function answer(text){
-    var q = QUESTIONS[step];
-
-    if (q.type === 'multi') {
-      if (text === 'Done ✓') {
-        if (!picked.length) { bot("Pick at least one, or type the tool name if it isn't listed."); return; }
-        A[q.id] = picked.join(', ');
-        me(A[q.id]); picked = [];
-        step++; next(); return;
-      }
-      if (q.options.indexOf(text) !== -1) {
-        var at = picked.indexOf(text);
-        if (at === -1) picked.push(text); else picked.splice(at, 1);
-        Array.prototype.forEach.call(chips.children, function(b){
-          if (b.textContent === text) b.classList.toggle('go');
-        });
-        return;
-      }
-      A[q.id] = picked.concat([text]).join(', ');
-      me(text); picked = [];
-      step++; next(); return;
-    }
-
-    if (q.id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) {
-      me(text);
-      bot("That doesn't look like a working address — mind checking it? Without it he has nowhere to send the scope.");
-      return;
-    }
-
-    me(text);
-    A[q.id] = text;
-    step++; next();
-  }
-
-  function next(){
-    if (step < QUESTIONS.length) { ask(); return; }
-    mode = 'chat';
-    input.placeholder = 'Type your message…';
-    var msg = compose();
-    bot("That's everything. Here's what goes to Hridoy:", function(){
-      bubble(esc(msg), 'note');
-      bot("Send it across and he'll reply within one working day. Want to put a time in the calendar as well?", function(){
-        setChips([['Send it to Hridoy','__send',true],['Book a call too','book'],['Start over','start']]);
-      });
-    });
-  }
-
-  function compose(){
-    var out = ['New project enquiry via failloudly.com (chat)', ''];
-    QUESTIONS.forEach(function(q){
-      out.push(q.label.toUpperCase());
-      out.push(A[q.id] || '—');
-      out.push('');
-    });
-    return out.join('\n');
-  }
-
-  function send(){
-    var msg = compose();
-    var subject = 'New project — ' + (A.since || 'enquiry');
-    var mailto = 'mailto:' + MAIL_TO + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(msg);
-
-    lastMessage = msg;
-    lastMailto = mailto;
-
-    function fallback(){
-      bot("I could not send that for you just now. Nothing is lost — copy it below and email it over, or put a time in the calendar and tell Hridoy live.", function(){
-        setChips([['Copy my message','__copy',true],['Email it instead','__mail'],['Book a call','book']]);
-      });
-    }
-
-    if (!ENDPOINT) { fallback(); return; }
-
-    busy = true; chips.innerHTML = '';
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        source: 'chat assistant', subject: subject,
-        email: A.email, message: msg, answers: A, _hp: ''
-      })
-    }).then(function(r){
-      if (!r.ok) throw new Error('bad status');
-      busy = false;
-      bot("Sent. It's with Hridoy now, and a copy has gone to **" + A.email + "** so you have it in writing. He replies within one working day.", function(){
-        setChips([['Book a call too','book'],['Ask something else','__menu']]);
-      });
-    }).catch(function(){
-      busy = false; fallback();
-    });
-  }
-
-  /* ----- wiring ----- */
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var text = input.value.trim();
-    if (!text || busy) return;
-    input.value = '';
-    if (mode === 'intake') { answer(text); return; }
-    me(text);
-    route(detect(text) || 'fallback');
+      btn.disabled = false;
+      btn.textContent = 'Open the chat →';
+    }, 2600);
   });
-
-  function copyText(text, done){
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, raw);
-    } else raw();
-    function raw(){
-      var ta = document.createElement('textarea');
-      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); done(); } catch (e) {}
-      document.body.removeChild(ta);
-    }
-  }
-
-  var origChip = chipClick;
-  chipClick = function(c){
-    if (busy) return;
-    if (c[1] === '__send') { me('Send it to Hridoy'); send(); return; }
-    if (c[1] === '__menu') { me('Ask something else'); bot('Go ahead.', menu); return; }
-    if (c[1] === '__copy') {
-      copyText(lastMessage, function(){
-        bot("Copied. Paste it into an email and it will reach him.", function(){
-          setChips([['Email it instead','__mail'],['Book a call','book']]);
-        });
-      });
-      return;
-    }
-    if (c[1] === '__mail') {
-      window.location.href = lastMailto;
-      bot("Your mail app should be opening with everything filled in — just hit send.", function(){
-        setChips([['Book a call','book'],['Ask something else','__menu']]);
-      });
-      return;
-    }
-    origChip(c);
-  };
-
-  function open(){
-    panel.classList.add('open');
-    launch.hidden = true;
-    if (!started) {
-      started = true;
-      bot("Hi — I'm Hridoy's assistant. He builds CRM systems, databases and integrations, and fixes the ones that broke quietly.\n\nWhat brings you here?", menu);
-    }
-    setTimeout(function(){ if (window.innerWidth > 600) input.focus(); }, 120);
-  }
-  function shut(){ panel.classList.remove('open'); launch.hidden = false; }
-
-  launch.addEventListener('click', open);
-  document.getElementById('chatx').addEventListener('click', shut);
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && panel.classList.contains('open') &&
-        !document.getElementById('modal').classList.contains('open')) shut();
-  });
-
-  /* nudge once, if they linger and haven't opened it */
-  setTimeout(function(){
-    if (started || launch.hidden) return;
-    launch.animate
-      ? launch.animate([{transform:'none'},{transform:'translateY(-6px)'},{transform:'none'}],
-          {duration:600, iterations:2})
-      : null;
-  }, 12000);
 })();
 </script>
 </body>

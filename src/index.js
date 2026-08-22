@@ -127,16 +127,19 @@ async function sendMail(apiKey, payload) {
 
 async function handleIntake(request, env) {
   const apiKey = env.RESEND_API_KEY;
+  const relayUrl = env.MAIL_RELAY_URL;
+  const transport = relayUrl ? "relay" : apiKey ? "resend" : null;
 
   // Health check: open https://failloudly.com/api/intake in a browser to see
-  // whether the mail key is actually set on this deployment.
+  // whether mail is actually wired up on this deployment.
   if (request.method === "GET") {
     return json({
       ok: true,
-      configured: Boolean(apiKey),
-      note: apiKey
-        ? "RESEND_API_KEY is set — enquiries will be emailed."
-        : "RESEND_API_KEY is NOT set — enquiries fall back to the visitor's mail client.",
+      configured: Boolean(transport),
+      transport,
+      note: transport
+        ? `Mail is configured (${transport}) — enquiries will be emailed.`
+        : "No mail transport set. Add MAIL_RELAY_URL (Apps Script) or RESEND_API_KEY.",
     });
   }
 
@@ -144,7 +147,7 @@ async function handleIntake(request, env) {
     return json({ error: "method not allowed" }, 405);
   }
 
-  if (!apiKey) {
+  if (!transport) {
     return json({ error: "mail is not configured yet" }, 503);
   }
 
@@ -173,6 +176,35 @@ async function handleIntake(request, env) {
     `Received: ${new Date().toISOString()}`,
   ].join("\n");
 
+  // Route A — Google Apps Script relay. Sends from the Workspace mailbox that
+  // already exists, so it needs no API key and no DNS records.
+  if (transport === "relay") {
+    try {
+      const res = await fetch(relayUrl, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          secret: env.RELAY_SECRET || "",
+          subject,
+          email,
+          message: `${message}\n\n${meta}`,
+          source,
+        }),
+        redirect: "follow",
+      });
+      const text = await res.text();
+      if (!res.ok || text.includes('"error"')) {
+        console.error("relay refused", res.status, text.slice(0, 300));
+        return json({ error: "could not send" }, 502);
+      }
+      return json({ ok: true });
+    } catch (err) {
+      console.error("relay unreachable", err);
+      return json({ error: "could not send" }, 502);
+    }
+  }
+
+  // Route B — Resend.
   const toOwner = ownerEmail({ subject, email, message, source, meta });
   const toSender = senderCopy({ message, ownerEmail: owner });
 
