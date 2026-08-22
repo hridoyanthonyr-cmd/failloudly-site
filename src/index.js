@@ -126,11 +126,24 @@ async function sendMail(apiKey, payload) {
 /* ---------- handler ---------- */
 
 async function handleIntake(request, env) {
+  const apiKey = env.RESEND_API_KEY;
+
+  // Health check: open https://failloudly.com/api/intake in a browser to see
+  // whether the mail key is actually set on this deployment.
+  if (request.method === "GET") {
+    return json({
+      ok: true,
+      configured: Boolean(apiKey),
+      note: apiKey
+        ? "RESEND_API_KEY is set — enquiries will be emailed."
+        : "RESEND_API_KEY is NOT set — enquiries fall back to the visitor's mail client.",
+    });
+  }
+
   if (request.method !== "POST") {
     return json({ error: "method not allowed" }, 405);
   }
 
-  const apiKey = env.RESEND_API_KEY;
   if (!apiKey) {
     return json({ error: "mail is not configured yet" }, 503);
   }
