@@ -210,9 +210,8 @@
     align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
   .ctx b{color:var(--alert);font-weight:500}
   .ctx .btn{padding:7px 12px;font-size:11.5px;margin-left:auto}
-  .modal-body{background:#000;overflow:auto;flex:1;min-height:0}
-  .modal-body iframe{display:block;width:100%;height:680px;border:0;background:#000;
-    filter:invert(.94) hue-rotate(180deg) saturate(.88) contrast(.96)}
+  .modal-body{background:#0B0E11;overflow:auto;flex:1;min-height:0;padding:14px}
+  .modal-body iframe{display:block;width:100%;height:660px;border:1px solid var(--line);background:#fff}
   .modal-foot{padding:11px 16px;border-top:1px solid var(--line);font-family:var(--mono);
     font-size:11px;color:var(--ink-faint);line-height:1.7}
   .modal-foot a{color:var(--ink-dim)}
@@ -773,11 +772,10 @@
 (function(){
   'use strict';
 
-  /* Paste a Formspree or Web3Forms endpoint URL here to receive intake
-     submissions directly, with no email address exposed on the page.
-     Left empty, the intake hands the visitor their message and opens
-     their own mail client instead. */
-  var FORM_ENDPOINT = '';
+  /* Server endpoint that emails the enquiry to Hridoy and a copy to the
+     sender. Handled by src/index.js in this repo. If it ever fails, the
+     intake falls back to opening the visitor's own mail client. */
+  var FORM_ENDPOINT = '/api/intake';
   var MAIL_TO = 'hridoy' + '@' + 'failloudly.com';
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1000,6 +998,14 @@
     var sendBtn = FORM_ENDPOINT
       ? '<button type="button" class="btn primary" id="send">Send it to me →</button>'
       : '<a class="btn primary" id="send" href="' + mailto + '">Send it to me →</a>';
+    var payload = {
+      source: 'site intake',
+      subject: subject,
+      email: answers.email,
+      message: msg,
+      answers: answers,
+      _hp: ''
+    };
 
     body.innerHTML = history()
       + '<div class="qline answered"><b>✓</b><span class="qt">That is everything I need to give you a scope and a price.</span></div>'
@@ -1016,14 +1022,15 @@
         fetch(FORM_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({ subject: subject, email: answers.email, message: msg })
+          body: JSON.stringify(payload)
         }).then(function(r){
           if (!r.ok) throw new Error('bad status');
           b.textContent = 'Sent ✓'; b.classList.add('done');
-          if (hint) hint.textContent = 'I will reply within one working day.';
+          if (hint) hint.textContent = 'On its way. A copy is in your inbox — reply within one working day.';
         }).catch(function(){
-          b.disabled = false; b.textContent = 'Send it to me →';
-          if (hint) hint.textContent = 'That did not go through — copy the message and send it to me instead.';
+          b.disabled = false;
+          b.outerHTML = '<a class="btn primary" href="' + mailto + '">Send it by email →</a>';
+          if (hint) hint.textContent = 'The form could not reach the server — this opens your mail app instead.';
         });
       });
     }
@@ -1128,6 +1135,7 @@
   if (!launch || !panel) return;
 
   var MAIL_TO = 'hridoy' + '@' + 'failloudly.com';
+  var ENDPOINT = '/api/intake';
   var started = false, busy = false;
   var mode = 'chat', step = 0, picked = [];
   var A = {};
@@ -1350,12 +1358,35 @@
 
   function send(){
     var msg = compose();
-    var url = 'mailto:' + MAIL_TO
-      + '?subject=' + encodeURIComponent('New project — ' + (A.since || 'enquiry'))
+    var subject = 'New project — ' + (A.since || 'enquiry');
+    var mailto = 'mailto:' + MAIL_TO + '?subject=' + encodeURIComponent(subject)
       + '&body=' + encodeURIComponent(msg);
-    window.location.href = url;
-    bot("Your mail app should be opening with all of it filled in — just hit send. If nothing happened, copy the block above and send it from wherever you like.", function(){
-      setChips([['Book a call too','book'],['Ask something else','__menu']]);
+
+    function fallback(){
+      window.location.href = mailto;
+      bot("I could not reach the server, so I have opened your mail app with everything filled in instead — just hit send.", function(){
+        setChips([['Book a call too','book'],['Ask something else','__menu']]);
+      });
+    }
+
+    if (!ENDPOINT) { fallback(); return; }
+
+    busy = true; chips.innerHTML = '';
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        source: 'chat assistant', subject: subject,
+        email: A.email, message: msg, answers: A, _hp: ''
+      })
+    }).then(function(r){
+      if (!r.ok) throw new Error('bad status');
+      busy = false;
+      bot("Sent. It's with Hridoy now, and a copy has gone to **" + A.email + "** so you have it in writing. He replies within one working day.", function(){
+        setChips([['Book a call too','book'],['Ask something else','__menu']]);
+      });
+    }).catch(function(){
+      busy = false; fallback();
     });
   }
 

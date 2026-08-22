@@ -1,5 +1,16 @@
 {
   "name": "failloudly-site",
   "compatibility_date": "2026-08-01",
-  "assets": { "directory": "./public" }
+  "main": "src/index.js",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // Secret, set in the dashboard (Settings → Variables and Secrets), never here:
+  //   RESEND_API_KEY
+  // Optional plain variables, defaults live in src/index.js:
+  //   OWNER_EMAIL, FROM_ADDRESS
 }
