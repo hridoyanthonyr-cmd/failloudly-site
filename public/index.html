@@ -189,12 +189,87 @@
   .orline{display:flex;align-items:center;gap:16px;margin:38px 0 22px;scroll-margin-top:74px;font-family:var(--mono);
     font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
   .orline::before,.orline::after{content:"";height:1px;background:var(--line);flex:1}
-  .book{border:1px solid var(--line);background:var(--panel)}
-  .book .cal{padding:10px;background:var(--panel-2)}
-  .book iframe{display:block;width:100%;height:640px;border:0;background:#fff}
-  @media(max-width:640px){ .book iframe{height:720px} }
-  .book .console-foot a{color:var(--ink-dim)}
-  .book .console-foot a:hover{color:var(--alert)}
+  .book{border:1px solid var(--line);background:var(--panel);padding:22px 22px 24px;display:flex;
+    gap:18px;align-items:center;flex-wrap:wrap}
+  .book p{color:var(--ink-dim);font-size:15px;flex:1;min-width:240px;max-width:46ch;margin:0}
+  .price .cta{margin-top:14px}
+  .price .cta .btn{width:100%;text-align:center}
+
+  /* modal */
+  .modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px;
+    background:rgba(6,9,12,.9);backdrop-filter:blur(5px)}
+  .modal.open{display:flex}
+  .modal-card{background:#080B0E;border:1px solid var(--line);width:100%;max-width:780px;max-height:94vh;
+    display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .modal-head{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  .modal-head .x{margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink-dim);
+    font-family:var(--mono);font-size:12px;padding:5px 11px;cursor:pointer;text-transform:none;letter-spacing:0}
+  .modal-head .x:hover{border-color:var(--crit);color:var(--crit)}
+  .ctx{padding:13px 16px;border-bottom:1px solid var(--line);display:flex;gap:12px;flex-wrap:wrap;
+    align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+  .ctx b{color:var(--alert);font-weight:500}
+  .ctx .btn{padding:7px 12px;font-size:11.5px;margin-left:auto}
+  .modal-body{background:#000;overflow:auto;flex:1;min-height:0}
+  .modal-body iframe{display:block;width:100%;height:680px;border:0;background:#000;
+    filter:invert(.94) hue-rotate(180deg) saturate(.88) contrast(.96)}
+  .modal-foot{padding:11px 16px;border-top:1px solid var(--line);font-family:var(--mono);
+    font-size:11px;color:var(--ink-faint);line-height:1.7}
+  .modal-foot a{color:var(--ink-dim)}
+  .modal-foot a:hover{color:var(--alert)}
+
+  /* chat */
+  .chat-launch{position:fixed;right:20px;bottom:20px;z-index:70;display:flex;align-items:center;gap:9px;
+    background:var(--alert);color:#16110A;border:0;font-family:var(--mono);font-size:13px;font-weight:700;
+    padding:13px 17px;cursor:pointer;box-shadow:0 12px 34px rgba(0,0,0,.5)}
+  .chat-launch:hover{filter:brightness(1.08)}
+  .chat-launch i{width:8px;height:8px;border-radius:50%;background:#16110A;animation:blink 1.6s steps(2,end) infinite}
+  .chat-launch[hidden]{display:none}
+  .chat{position:fixed;right:20px;bottom:20px;z-index:75;width:min(384px,calc(100vw - 32px));
+    height:min(576px,calc(100vh - 40px));background:var(--panel);border:1px solid var(--line);
+    display:none;flex-direction:column;box-shadow:0 22px 64px rgba(0,0,0,.6)}
+  .chat.open{display:flex}
+  .chat-head{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-dim)}
+  .chat-head .who{display:flex;flex-direction:column;gap:2px}
+  .chat-head .who b{color:var(--ink);font-weight:700;letter-spacing:.02em}
+  .chat-head .who span{color:var(--ok);font-size:10.5px;display:flex;align-items:center;gap:6px}
+  .chat-head .who span i{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+  .chat-head .x{margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink-faint);
+    font-family:var(--mono);font-size:14px;line-height:1;padding:6px 10px;cursor:pointer}
+  .chat-head .x:hover{border-color:var(--crit);color:var(--crit)}
+  .chat-log{flex:1;overflow-y:auto;padding:15px 14px;display:flex;flex-direction:column;gap:9px}
+  .b{max-width:87%;font-size:14px;line-height:1.55;padding:10px 13px;border:1px solid var(--line);
+    animation:pop .22s ease;overflow-wrap:anywhere}
+  @keyframes pop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  .b.bot{background:var(--panel-2);color:var(--ink);align-self:flex-start}
+  .b.me{background:var(--alert);color:#16110A;border-color:var(--alert);align-self:flex-end;font-weight:500}
+  .b.note{background:transparent;border-style:dashed;color:var(--ink-faint);font-family:var(--mono);
+    font-size:12px;align-self:flex-start;max-width:100%;white-space:pre-wrap;line-height:1.65}
+  .b b{font-weight:700}
+  .typing{align-self:flex-start;display:flex;gap:5px;padding:13px 14px;background:var(--panel-2);border:1px solid var(--line)}
+  .typing i{width:5px;height:5px;border-radius:50%;background:var(--ink-faint);animation:bob 1.05s infinite}
+  .typing i:nth-child(2){animation-delay:.16s} .typing i:nth-child(3){animation-delay:.32s}
+  @keyframes bob{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}
+  .chip-b{font-family:var(--mono);font-size:11.5px;background:transparent;border:1px solid var(--line);
+    color:var(--ink-dim);padding:7px 10px;cursor:pointer;text-align:left;transition:border-color .14s,color .14s}
+  .chip-b:hover{border-color:var(--alert);color:var(--alert)}
+  .chip-b.go{border-color:rgba(232,145,58,.5);color:var(--alert)}
+  .chat-in{display:flex;border-top:1px solid var(--line)}
+  .chat-in input{flex:1;min-width:0;background:var(--ground);border:0;color:var(--ink);
+    font-family:var(--sans);font-size:14px;padding:13px 14px}
+  .chat-in input:focus{outline:none}
+  .chat-in button{background:var(--panel-2);border:0;border-left:1px solid var(--line);color:var(--alert);
+    font-family:var(--mono);font-size:12px;font-weight:700;padding:0 15px;cursor:pointer}
+  .chat-in button:hover{background:var(--line)}
+  @media(max-width:600px){
+    .chat{right:0;bottom:0;width:100vw;height:100dvh;border:0}
+    .chat-launch{right:14px;bottom:14px}
+    .modal{padding:0}
+    .modal-card{max-height:100vh;height:100dvh}
+    .modal-body iframe{height:760px}
+  }
 
   /* contact */
   .contact{margin-top:96px;border-top:1px solid var(--line);padding:56px 0 0;scroll-margin-top:60px}
@@ -487,6 +562,7 @@
           <li><b>$100 · 60 min</b> — architecture session: we design the build together and you leave with the plan, whether or not I build it</li>
         </ul>
         <div class="band">Fee credited against the project if you book within 14 days.</div>
+        <div class="cta"><button type="button" class="btn book-btn" data-ctx="Scoped call">Book a slot →</button></div>
       </div>
 
       <div class="price">
@@ -498,6 +574,7 @@
           <li><b>$1,400</b> — multi-object pipeline, historical backfill, retry and alerting</li>
         </ul>
         <div class="band">Zoho · SmartSuite · HubSpot · Freshsales · Xero · Shopify · Supabase · Sheets</div>
+        <div class="cta"><button type="button" class="btn book-btn" data-ctx="Integration between two systems">Book a call about this →</button></div>
       </div>
 
       <div class="price">
@@ -509,6 +586,7 @@
           <li><b>$3,200</b> — migration from spreadsheets or a legacy CRM, including data cleaning and a parallel-run week</li>
         </ul>
         <div class="band">Includes a written admin handover so you aren't dependent on me afterwards.</div>
+        <div class="cta"><button type="button" class="btn book-btn" data-ctx="CRM build or rebuild">Book a call about this →</button></div>
       </div>
 
       <div class="price">
@@ -520,6 +598,7 @@
           <li><b>$1,100</b> — audit plus rebuild of the failing parts, with monitoring and alerting on each job</li>
         </ul>
         <div class="band">Duplicate records, silent syncs, expired API credits, rules overwriting each other.</div>
+        <div class="cta"><button type="button" class="btn book-btn" data-ctx="Automation audit &amp; repair">Book a call about this →</button></div>
       </div>
 
       <div class="price">
@@ -531,6 +610,7 @@
           <li><b>$2,400</b> — full reporting pipeline: sources, transforms, snapshots, and dashboards that reconcile to the source</li>
         </ul>
         <div class="band">Supabase · Postgres · BigQuery · Apps Script · Python</div>
+        <div class="cta"><button type="button" class="btn book-btn" data-ctx="Database &amp; reporting layer">Book a call about this →</button></div>
       </div>
 
       <div class="price">
@@ -542,6 +622,7 @@
           <li>Monthly health check on every job and integration you run</li>
         </ul>
         <div class="band">446 tickets closed on a standing queue for one consultancy over six years.</div>
+        <div class="cta"><button type="button" class="btn book-btn" data-ctx="Ongoing support">Book a call about this →</button></div>
       </div>
     </div>
 
@@ -584,7 +665,7 @@
   </section>
   <section class="contact" id="contact">
     <h2>Tell me what's breaking, or what you need built.</h2>
-    <p>Five questions, about ninety seconds. Answer them here and you'll have a reply with a scope and a fixed price within one working day. If you'd rather just talk, the calendar underneath has my real availability.</p>
+    <p>Five questions, about ninety seconds. Answer them here and you'll have a reply with a scope and a fixed price within one working day. The chat in the corner does the same thing and will answer questions while you're at it.</p>
 
     <div class="console intake" id="intake">
       <div class="console-head">
@@ -600,14 +681,8 @@
     <div class="orline" id="book">or pick a time</div>
 
     <div class="book">
-      <div class="console-head">
-        <span>calendar · live availability</span>
-        <span class="live"><i></i>open</span>
-      </div>
-      <div class="cal">
-        <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3KbYFb7zjsHmjRV_CHBhaGmOmIankITqmzphJqCT2QH6BfZHSQ-QE8QbY_nhcurNb9qH5yLQd_?gv=true" title="Book a call with Hridoy Rozario" loading="lazy"></iframe>
-      </div>
-      <div class="console-foot">Slots are live from my calendar — booking one confirms it immediately. Times shown in your own timezone. Calendar not loading? <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3KbYFb7zjsHmjRV_CHBhaGmOmIankITqmzphJqCT2QH6BfZHSQ-QE8QbY_nhcurNb9qH5yLQd_?gv=true" target="_blank" rel="noopener">open it in a new tab</a>.</div>
+      <p>Rather talk it through first? My live calendar is a click away — 30 or 60 minutes, screen shared, and you leave knowing what the work actually involves.</p>
+      <button type="button" class="btn primary book-btn" data-ctx="General enquiry">Open the calendar →</button>
     </div>
 
     <div class="links">
@@ -625,18 +700,66 @@
 
 </div>
 
+<!-- booking modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modaltitle" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <span id="modaltitle">book a call · live availability</span>
+      <button type="button" class="x" id="modalx">Close ✕</button>
+    </div>
+    <div class="ctx">
+      <span>About: <b id="ctxlabel">General enquiry</b></span>
+      <button type="button" class="btn" id="ctxcopy">Copy this note</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="calframe" title="Book a call with Hridoy Rozario" data-src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3KbYFb7zjsHmjRV_CHBhaGmOmIankITqmzphJqCT2QH6BfZHSQ-QE8QbY_nhcurNb9qH5yLQd_?gv=true"></iframe>
+    </div>
+    <div class="modal-foot">
+      Paste the note above into the booking form so I know what we're covering before we start. Times show in your own timezone.<br>
+      Calendar not loading? <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3KbYFb7zjsHmjRV_CHBhaGmOmIankITqmzphJqCT2QH6BfZHSQ-QE8QbY_nhcurNb9qH5yLQd_?gv=true" target="_blank" rel="noopener">open it in a new tab</a>.
+    </div>
+  </div>
+</div>
+
+<!-- chat -->
+<button type="button" class="chat-launch" id="launch" aria-haspopup="dialog"><i></i>Ask me anything</button>
+
+<div class="chat" id="chat" role="dialog" aria-modal="false" aria-label="Chat with Hridoy's assistant">
+  <div class="chat-head">
+    <div class="who">
+      <b>failloudly · assistant</b>
+      <span><i></i>Hridoy usually replies within a day</span>
+    </div>
+    <button type="button" class="x" id="chatx" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-log" id="chatlog" aria-live="polite"></div>
+  <div class="chips" id="chatchips"></div>
+  <form class="chat-in" id="chatform" autocomplete="off">
+    <input id="chatinput" type="text" placeholder="Type your message…" aria-label="Your message">
+    <button type="submit">SEND</button>
+  </form>
+</div>
+
 <!--
-  LIVE CHAT (optional, 5 minutes to enable)
+  LIVE CHAT HANDOVER (optional, 5 minutes to enable)
   ------------------------------------------------------------------
-  The intake above works with no server and no third party. If you also want to
-  answer visitors in real time from your phone, add one free widget below and
-  it will sit alongside the intake:
+  The assistant above answers questions and collects project details with no
+  server and no third party. If you also want to jump into conversations
+  yourself in real time, add one free widget below — it sits in the corner
+  alongside this one:
 
     Crisp   — https://crisp.chat        free plan, iOS/Android/desktop apps
     Tawk.to — https://www.tawk.to       free, unlimited agents
 
-  Sign up, copy the snippet they give you, and paste it directly under this
-  comment. Nothing else on the page needs to change.
+  Paste their snippet directly under this comment. Nothing else changes.
+
+  KNOWING WHY SOMEONE BOOKED
+  ------------------------------------------------------------------
+  The booking modal shows what the visitor clicked from and offers them a note
+  to paste. To make that mandatory rather than optional, open Google Calendar →
+  your appointment schedule → Booking form → Add a custom question, e.g.
+  "What do you want to cover?" and "Which tools are involved?". Those answers
+  then arrive with every booking automatically.
 
   DELIVERY OF INTAKE ANSWERS
   ------------------------------------------------------------------
@@ -644,7 +767,7 @@
   client addressed to you. To receive submissions silently instead — with no
   address exposed anywhere — create a free endpoint at https://formspree.io or
   https://web3forms.com and paste its URL into FORM_ENDPOINT at the top of the
-  script below. The intake will POST to it and show a confirmation.
+  script below.
 -->
 <script>
 (function(){
@@ -927,6 +1050,360 @@
   }
 
   render();
+})();
+</script>
+
+<script>
+/* ---------- booking modal ---------- */
+(function(){
+  'use strict';
+  var modal = document.getElementById('modal');
+  if (!modal) return;
+  var frame = document.getElementById('calframe');
+  var label = document.getElementById('ctxlabel');
+  var lastFocus = null;
+
+  function note(){
+    return 'Booking about: ' + label.textContent + ' — via failloudly.com';
+  }
+
+  window.openBooking = function(ctx){
+    label.textContent = ctx || 'General enquiry';
+    if (!frame.getAttribute('src')) frame.setAttribute('src', frame.getAttribute('data-src'));
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modalx').focus();
+  };
+
+  function close(){
+    modal.classList.remove('open');
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.getElementById('modalx').addEventListener('click', close);
+  modal.addEventListener('click', function(e){ if (e.target === modal) close(); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && modal.classList.contains('open')) close();
+  });
+
+  document.getElementById('ctxcopy').addEventListener('click', function(){
+    var b = this, txt = note();
+    function done(){
+      b.textContent = 'Copied ✓'; b.classList.add('done');
+      setTimeout(function(){ b.textContent = 'Copy this note'; b.classList.remove('done'); }, 2200);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(done, function(){});
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(err) {}
+      document.body.removeChild(ta);
+    }
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.book-btn'), function(btn){
+    btn.addEventListener('click', function(){
+      var t = document.createElement('textarea');
+      t.innerHTML = btn.getAttribute('data-ctx') || '';
+      window.openBooking(t.value);
+    });
+  });
+})();
+
+/* ---------- assistant ---------- */
+(function(){
+  'use strict';
+  var launch = document.getElementById('launch');
+  var panel  = document.getElementById('chat');
+  var log    = document.getElementById('chatlog');
+  var chips  = document.getElementById('chatchips');
+  var form   = document.getElementById('chatform');
+  var input  = document.getElementById('chatinput');
+  if (!launch || !panel) return;
+
+  var MAIL_TO = 'hridoy' + '@' + 'failloudly.com';
+  var started = false, busy = false;
+  var mode = 'chat', step = 0, picked = [];
+  var A = {};
+
+  var QUESTIONS = [
+    { id:'problem', label:'The problem', type:'text',
+      q:'Tell me what you need built, or what is going wrong. A couple of sentences is plenty.' },
+    { id:'tools', label:'Tools involved', type:'multi',
+      q:'Which tools are involved? Tap all that apply, then hit Done.',
+      options:['Zoho','SmartSuite','HubSpot','Salesforce','Freshsales','Airtable','Supabase / Postgres','Google Sheets','Xero / QuickBooks','Shopify','Make / Zapier','Something else'] },
+    { id:'since', label:'Current state', type:'single',
+      q:'Where are you with it right now?',
+      options:['Nothing built yet','Built, but not working right','Working, but held together by hand','Broken and costing us now'] },
+    { id:'cost', label:'Cost of the problem', type:'text',
+      q:'What is this costing you today — hours, money, or trust in the numbers?' },
+    { id:'email', label:'Reply address', type:'text',
+      q:'Last one: where should Hridoy send his reply?' }
+  ];
+
+  var MENU = [
+    ['What does he build?', 'build'],
+    ['How much does it cost?', 'price'],
+    ['Book a call', 'book'],
+    ['Start a project', 'start']
+  ];
+
+  var ANSWERS = {
+    build: "Three kinds of work. **New systems** — CRM architecture in Zoho One or SmartSuite, a Postgres database behind a sales team, workflows where each stage opens the next. **Connections** — two tools holding the same records and disagreeing, or a spreadsheet doing a database's job. **Repairs** — automation that broke quietly and nobody noticed.\n\nTen of the twelve projects in the work log above are builds, not repairs.",
+    price: "Published, and fixed wherever the work has a known shape.\n\n• Scoped calls — $45 (30 min) to $100 (architecture session)\n• Integrations — from $300\n• CRM builds — from $600, migrations to $3,200\n• Audit &amp; repair — from $250\n• Database and reporting — from $500\n• Ongoing support — $55–60/hr, no retainer\n\nEvery fixed price is agreed in writing before any work starts.",
+    time: "It depends on the shape, but roughly: a single broken workflow is usually a few days. An integration between two systems is one to two weeks. A full CRM build or migration runs three to six weeks, with you testing as it goes rather than at the end.\n\nYou get the date in writing along with the price, before anything begins.",
+    stack: "Daily: Zoho One and Zoho CRM, SmartSuite, HubSpot, Freshsales, Salesforce, Supabase and PostgreSQL, BigQuery, Google Apps Script, Python, Node.js, REST APIs and webhooks, Make and Zapier, Xero, Shopify.\n\nIf your stack isn't on that list it's usually still fine — most of this work is API-shaped.",
+    repair: "That's the repair track. It starts with an audit: every rule, function and connection mapped, conflicts listed, and the actual root cause named rather than guessed at.\n\nFrom $250 for a single broken workflow, $500 for a full platform audit. Whatever gets fixed also gets monitoring, so the next failure arrives as an alert instead of a surprise.",
+    about: "Hridoy Rozario — integration and automation engineer, based in Montpellier, France, working across US, UK, EU and Australian time zones.\n\nSix years freelance, 51 contracts, 6,762 hours billed, 100% job success and Top Rated on Upwork. 446 tickets closed on one consultancy's standing queue.",
+    who: "I'm the assistant on Hridoy's site — a scripted one, so I'm honest about it. I can answer questions about the work and prices, and I can take your project details straight to him.\n\nHe replies himself, usually within a working day."
+  };
+
+  var INTENTS = [
+    [/\b(book|call|meet|meeting|schedule|appointment|calendar|talk to)\b/i, 'book'],
+    [/\b(price|pricing|cost|rate|charge|fee|budget|how much|expensive|quote)\b/i, 'price'],
+    [/\b(how long|timeline|time frame|timeframe|deadline|how fast|when can|duration|lead time)\b/i, 'time'],
+    [/\b(zoho|smartsuite|hubspot|salesforce|freshsales|supabase|postgres|airtable|xero|shopify|zapier|make|apps script|python|api|stack|tool|tools|integrat)/i, 'stack'],
+    [/\b(broken|break|fix|fail|failing|error|bug|duplicate|not working|stopped|sync issue|audit)\b/i, 'repair'],
+    [/\b(start|hire|work with|project|quote me|get going|engage|onboard)\b/i, 'start'],
+    [/\b(build|builds|new system|crm|database|automat)/i, 'build'],
+    [/\b(who are you|are you a bot|are you real|human|chatbot|assistant)\b/i, 'who'],
+    [/\b(who is|about him|experience|background|years|upwork|linkedin|where.*based|located)\b/i, 'about'],
+    [/^(hi|hey|hello|yo|good (morning|afternoon|evening))\b/i, 'hello']
+  ];
+
+  function esc(s){
+    return String(s).replace(/&(?!amp;)/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function fmt(s){
+    return esc(s).replace(/&amp;amp;/g,'&amp;')
+                 .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+                 .replace(/\n/g,'<br>');
+  }
+  function scroll(){ log.scrollTop = log.scrollHeight; }
+
+  function bubble(html, cls){
+    var d = document.createElement('div');
+    d.className = 'b ' + (cls || 'bot');
+    d.innerHTML = html;
+    log.appendChild(d); scroll();
+    return d;
+  }
+  function me(text){ bubble(esc(text), 'me'); }
+
+  function bot(text, then){
+    busy = true; chips.innerHTML = '';
+    var t = document.createElement('div');
+    t.className = 'typing';
+    t.innerHTML = '<i></i><i></i><i></i>';
+    log.appendChild(t); scroll();
+    var wait = Math.min(1100, 260 + String(text).length * 7);
+    setTimeout(function(){
+      t.remove();
+      bubble(fmt(text), 'bot');
+      busy = false;
+      if (then) then();
+    }, wait);
+  }
+
+  function setChips(list){
+    chips.innerHTML = '';
+    (list || []).forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip-b' + (c[2] ? ' go' : '');
+      b.textContent = c[0];
+      b.addEventListener('click', function(){ chipClick(c); });
+      chips.appendChild(b);
+    });
+    scroll();
+  }
+
+  function menu(){
+    setChips(MENU.map(function(m, i){ return [m[0], m[1], i === 3]; }));
+  }
+
+  function chipClick(c){
+    if (busy) return;
+    if (mode === 'intake') { answer(c[0]); return; }
+    me(c[0]);
+    route(c[1]);
+  }
+
+  function route(intent){
+    if (intent === 'book') {
+      bot("Opening the calendar now — pick any slot that works. I've tagged it with what we've talked about so Hridoy knows what to prepare.", function(){
+        window.openBooking(A.problem ? A.problem.slice(0, 90) : 'Question from the site chat');
+        menu();
+      });
+      return;
+    }
+    if (intent === 'start') { beginIntake(); return; }
+    if (intent === 'hello') {
+      bot("Hello. Ask me about the work, the prices, or how long something takes — or tell me what you need and I'll pass it straight to Hridoy.", menu);
+      return;
+    }
+    if (ANSWERS[intent]) {
+      bot(ANSWERS[intent], function(){
+        if (intent === 'price') setChips([['Book a call','book'],['Start a project','start',true],['How long does it take?','time']]);
+        else if (intent === 'repair') setChips([['Start a project','start',true],['Book a call','book'],['How much?','price']]);
+        else menu();
+      });
+      return;
+    }
+    bot("That one is better answered by Hridoy himself than by me. Give me the details and he'll come back to you within a working day — or book a call and ask him live.", function(){
+      setChips([['Give him the details','start',true],['Book a call','book']]);
+    });
+  }
+
+  function detect(text){
+    for (var i = 0; i < INTENTS.length; i++) if (INTENTS[i][0].test(text)) return INTENTS[i][1];
+    return null;
+  }
+
+  /* ----- intake inside the chat ----- */
+  function beginIntake(){
+    mode = 'intake'; step = 0; picked = []; A = {};
+    bot("Good. Five short questions and Hridoy will have everything he needs to send you a scope and a fixed price.", ask);
+  }
+
+  function ask(){
+    var q = QUESTIONS[step];
+    bot(q.q, function(){
+      if (q.type === 'multi') {
+        var list = q.options.map(function(o){ return [o, o]; });
+        list.push(['Done ✓', '__done', true]);
+        setChips(list);
+        input.placeholder = 'or type them instead…';
+      } else if (q.type === 'single') {
+        setChips(q.options.map(function(o){ return [o, o]; }));
+        input.placeholder = 'or type your own…';
+      } else {
+        chips.innerHTML = '';
+        input.placeholder = q.id === 'email' ? 'you@company.com' : 'Type your answer…';
+        input.focus();
+      }
+    });
+  }
+
+  function answer(text){
+    var q = QUESTIONS[step];
+
+    if (q.type === 'multi') {
+      if (text === 'Done ✓') {
+        if (!picked.length) { bot("Pick at least one, or type the tool name if it isn't listed."); return; }
+        A[q.id] = picked.join(', ');
+        me(A[q.id]); picked = [];
+        step++; next(); return;
+      }
+      if (q.options.indexOf(text) !== -1) {
+        var at = picked.indexOf(text);
+        if (at === -1) picked.push(text); else picked.splice(at, 1);
+        Array.prototype.forEach.call(chips.children, function(b){
+          if (b.textContent === text) b.classList.toggle('go');
+        });
+        return;
+      }
+      A[q.id] = picked.concat([text]).join(', ');
+      me(text); picked = [];
+      step++; next(); return;
+    }
+
+    if (q.id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) {
+      me(text);
+      bot("That doesn't look like a working address — mind checking it? Without it he has nowhere to send the scope.");
+      return;
+    }
+
+    me(text);
+    A[q.id] = text;
+    step++; next();
+  }
+
+  function next(){
+    if (step < QUESTIONS.length) { ask(); return; }
+    mode = 'chat';
+    input.placeholder = 'Type your message…';
+    var msg = compose();
+    bot("That's everything. Here's what goes to Hridoy:", function(){
+      bubble(esc(msg), 'note');
+      bot("Send it across and he'll reply within one working day. Want to put a time in the calendar as well?", function(){
+        setChips([['Send it to Hridoy','__send',true],['Book a call too','book'],['Start over','start']]);
+      });
+    });
+  }
+
+  function compose(){
+    var out = ['New project enquiry via failloudly.com (chat)', ''];
+    QUESTIONS.forEach(function(q){
+      out.push(q.label.toUpperCase());
+      out.push(A[q.id] || '—');
+      out.push('');
+    });
+    return out.join('\n');
+  }
+
+  function send(){
+    var msg = compose();
+    var url = 'mailto:' + MAIL_TO
+      + '?subject=' + encodeURIComponent('New project — ' + (A.since || 'enquiry'))
+      + '&body=' + encodeURIComponent(msg);
+    window.location.href = url;
+    bot("Your mail app should be opening with all of it filled in — just hit send. If nothing happened, copy the block above and send it from wherever you like.", function(){
+      setChips([['Book a call too','book'],['Ask something else','__menu']]);
+    });
+  }
+
+  /* ----- wiring ----- */
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var text = input.value.trim();
+    if (!text || busy) return;
+    input.value = '';
+    if (mode === 'intake') { answer(text); return; }
+    me(text);
+    route(detect(text) || 'fallback');
+  });
+
+  var origChip = chipClick;
+  chipClick = function(c){
+    if (busy) return;
+    if (c[1] === '__send') { me('Send it to Hridoy'); send(); return; }
+    if (c[1] === '__menu') { me('Ask something else'); bot('Go ahead.', menu); return; }
+    origChip(c);
+  };
+
+  function open(){
+    panel.classList.add('open');
+    launch.hidden = true;
+    if (!started) {
+      started = true;
+      bot("Hi — I'm Hridoy's assistant. He builds CRM systems, databases and integrations, and fixes the ones that broke quietly.\n\nWhat brings you here?", menu);
+    }
+    setTimeout(function(){ if (window.innerWidth > 600) input.focus(); }, 120);
+  }
+  function shut(){ panel.classList.remove('open'); launch.hidden = false; }
+
+  launch.addEventListener('click', open);
+  document.getElementById('chatx').addEventListener('click', shut);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && panel.classList.contains('open') &&
+        !document.getElementById('modal').classList.contains('open')) shut();
+  });
+
+  /* nudge once, if they linger and haven't opened it */
+  setTimeout(function(){
+    if (started || launch.hidden) return;
+    launch.animate
+      ? launch.animate([{transform:'none'},{transform:'translateY(-6px)'},{transform:'none'}],
+          {duration:600, iterations:2})
+      : null;
+  }, 12000);
 })();
 </script>
 </body>
