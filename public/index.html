@@ -185,6 +185,17 @@
     font-size:12.5px;line-height:1.7;color:var(--ink-dim);white-space:pre-wrap;overflow-wrap:anywhere;max-height:230px;overflow:auto}
   .btn.copy.done,.btn.done{border-color:var(--ok);color:var(--ok)}
 
+  /* booking */
+  .orline{display:flex;align-items:center;gap:16px;margin:38px 0 22px;scroll-margin-top:74px;font-family:var(--mono);
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .orline::before,.orline::after{content:"";height:1px;background:var(--line);flex:1}
+  .book{border:1px solid var(--line);background:var(--panel)}
+  .book .cal{padding:10px;background:var(--panel-2)}
+  .book iframe{display:block;width:100%;height:640px;border:0;background:#fff}
+  @media(max-width:640px){ .book iframe{height:720px} }
+  .book .console-foot a{color:var(--ink-dim)}
+  .book .console-foot a:hover{color:var(--alert)}
+
   /* contact */
   .contact{margin-top:96px;border-top:1px solid var(--line);padding:56px 0 0;scroll-margin-top:60px}
   .contact h2{font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;max-width:18ch;text-wrap:balance}
@@ -215,6 +226,7 @@
       <a href="#log">Work</a>
       <a href="#pricing">Pricing</a>
       <a href="#process">Process</a>
+      <a href="#book">Book a call</a>
       <a href="#contact">Start</a>
     </nav>
     <div class="state"><span class="beacon"></span>AVAILABLE</div>
@@ -229,6 +241,7 @@
       <p class="lede">CRM architecture, databases and integrations — plus the alerting that makes them honest. Most automation fails quietly: an API runs out of credits, a snapshot job doubles up, a backfill kills the live feed and nobody notices for days. Mine says so.</p>
       <div class="herolinks">
         <a class="btn primary" href="#contact">Start a project →</a>
+        <a class="btn" href="#book">Book a call</a>
         <a class="btn" href="#pricing">See prices</a>
       </div>
     </div>
@@ -571,7 +584,7 @@
   </section>
   <section class="contact" id="contact">
     <h2>Tell me what's breaking, or what you need built.</h2>
-    <p>Five questions, about ninety seconds. It goes straight to me — not to a form queue — and you'll have a reply with a scope and a price within one working day.</p>
+    <p>Five questions, about ninety seconds. Answer them here and you'll have a reply with a scope and a fixed price within one working day. If you'd rather just talk, the calendar underneath has my real availability.</p>
 
     <div class="console intake" id="intake">
       <div class="console-head">
@@ -581,12 +594,20 @@
       <div class="intake-body" id="ibody">
         <div class="qline"><b>&gt;</b><span class="qt">Loading intake…</span></div>
       </div>
-      <div class="console-foot">Nothing is stored on this page. The last step hands you the message and opens your mail client.</div>
+      <div class="console-foot">Nothing is stored on this page. Your answers go to me and nowhere else.</div>
     </div>
 
-    <div class="addrline">
-      <span class="addr-label">or write to me directly</span>
-      <a class="addr" href="mailto:hridoy@failloudly.com">hridoy@failloudly.com</a>
+    <div class="orline" id="book">or pick a time</div>
+
+    <div class="book">
+      <div class="console-head">
+        <span>calendar · live availability</span>
+        <span class="live"><i></i>open</span>
+      </div>
+      <div class="cal">
+        <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3KbYFb7zjsHmjRV_CHBhaGmOmIankITqmzphJqCT2QH6BfZHSQ-QE8QbY_nhcurNb9qH5yLQd_?gv=true" title="Book a call with Hridoy Rozario" loading="lazy"></iframe>
+      </div>
+      <div class="console-foot">Slots are live from my calendar — booking one confirms it immediately. Times shown in your own timezone. Calendar not loading? <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3KbYFb7zjsHmjRV_CHBhaGmOmIankITqmzphJqCT2QH6BfZHSQ-QE8QbY_nhcurNb9qH5yLQd_?gv=true" target="_blank" rel="noopener">open it in a new tab</a>.</div>
     </div>
 
     <div class="links">
@@ -616,10 +637,26 @@
 
   Sign up, copy the snippet they give you, and paste it directly under this
   comment. Nothing else on the page needs to change.
+
+  DELIVERY OF INTAKE ANSWERS
+  ------------------------------------------------------------------
+  By default the intake hands the visitor their message and opens their own mail
+  client addressed to you. To receive submissions silently instead — with no
+  address exposed anywhere — create a free endpoint at https://formspree.io or
+  https://web3forms.com and paste its URL into FORM_ENDPOINT at the top of the
+  script below. The intake will POST to it and show a confirmation.
 -->
 <script>
 (function(){
   'use strict';
+
+  /* Paste a Formspree or Web3Forms endpoint URL here to receive intake
+     submissions directly, with no email address exposed on the page.
+     Left empty, the intake hands the visitor their message and opens
+     their own mail client instead. */
+  var FORM_ENDPOINT = '';
+  var MAIL_TO = 'hridoy' + '@' + 'failloudly.com';
+
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- event feed ---------- */
@@ -833,18 +870,40 @@
   function finish(){
     if (stepcount) stepcount.textContent = 'complete';
     var msg = message();
-    var mailto = 'mailto:hridoy@failloudly.com?subject='
-      + encodeURIComponent('New project — ' + (answers.since || 'enquiry'))
+    var subject = 'New project — ' + (answers.since || 'enquiry');
+    var mailto = 'mailto:' + MAIL_TO + '?subject=' + encodeURIComponent(subject)
       + '&body=' + encodeURIComponent(msg);
+
+    var sendBtn = FORM_ENDPOINT
+      ? '<button type="button" class="btn primary" id="send">Send it to me →</button>'
+      : '<a class="btn primary" id="send" href="' + mailto + '">Send it to me →</a>';
 
     body.innerHTML = history()
       + '<div class="qline answered"><b>✓</b><span class="qt">That is everything I need to give you a scope and a price.</span></div>'
       + '<div class="summary" id="sum">' + esc(msg) + '</div>'
-      + '<div class="rowbtns">'
-      + '<a class="btn primary" id="send" href="' + mailto + '">Send it to me →</a>'
+      + '<div class="rowbtns">' + sendBtn
       + '<button type="button" class="btn copy" id="copy">Copy the message</button>'
       + '<button type="button" class="btn" id="restart">Start over</button>'
-      + '<span class="hint">reply within one working day</span></div>';
+      + '<span class="hint" id="sendhint">reply within one working day</span></div>';
+
+    if (FORM_ENDPOINT) {
+      document.getElementById('send').addEventListener('click', function(){
+        var b = this, hint = document.getElementById('sendhint');
+        b.disabled = true; b.textContent = 'Sending…';
+        fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ subject: subject, email: answers.email, message: msg })
+        }).then(function(r){
+          if (!r.ok) throw new Error('bad status');
+          b.textContent = 'Sent ✓'; b.classList.add('done');
+          if (hint) hint.textContent = 'I will reply within one working day.';
+        }).catch(function(){
+          b.disabled = false; b.textContent = 'Send it to me →';
+          if (hint) hint.textContent = 'That did not go through — copy the message and send it to me instead.';
+        });
+      });
+    }
 
     document.getElementById('copy').addEventListener('click', function(){
       var b = this;
