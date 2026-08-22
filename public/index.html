@@ -1034,7 +1034,7 @@
         }).catch(function(){
           b.disabled = false;
           b.outerHTML = '<a class="btn primary" href="' + mailto + '">Send it by email →</a>';
-          if (hint) hint.textContent = 'The form could not reach the server — this opens your mail app instead.';
+          if (hint) hint.textContent = 'Could not send it for you — this sends it from your own mail app instead.';
         });
       });
     }
@@ -1140,7 +1140,7 @@
 
   var MAIL_TO = 'hridoy' + '@' + 'failloudly.com';
   var ENDPOINT = '/api/intake';
-  var started = false, busy = false;
+  var started = false, busy = false, lastMessage = '', lastMailto = '';
   var mode = 'chat', step = 0, picked = [];
   var A = {};
 
@@ -1366,10 +1366,12 @@
     var mailto = 'mailto:' + MAIL_TO + '?subject=' + encodeURIComponent(subject)
       + '&body=' + encodeURIComponent(msg);
 
+    lastMessage = msg;
+    lastMailto = mailto;
+
     function fallback(){
-      window.location.href = mailto;
-      bot("I could not reach the server, so I have opened your mail app with everything filled in instead — just hit send.", function(){
-        setChips([['Book a call too','book'],['Ask something else','__menu']]);
+      bot("I could not send that for you just now. Nothing is lost — copy it below and email it over, or put a time in the calendar and tell Hridoy live.", function(){
+        setChips([['Copy my message','__copy',true],['Email it instead','__mail'],['Book a call','book']]);
       });
     }
 
@@ -1405,11 +1407,39 @@
     route(detect(text) || 'fallback');
   });
 
+  function copyText(text, done){
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, raw);
+    } else raw();
+    function raw(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
   var origChip = chipClick;
   chipClick = function(c){
     if (busy) return;
     if (c[1] === '__send') { me('Send it to Hridoy'); send(); return; }
     if (c[1] === '__menu') { me('Ask something else'); bot('Go ahead.', menu); return; }
+    if (c[1] === '__copy') {
+      copyText(lastMessage, function(){
+        bot("Copied. Paste it into an email and it will reach him.", function(){
+          setChips([['Email it instead','__mail'],['Book a call','book']]);
+        });
+      });
+      return;
+    }
+    if (c[1] === '__mail') {
+      window.location.href = lastMailto;
+      bot("Your mail app should be opening with everything filled in — just hit send.", function(){
+        setChips([['Book a call','book'],['Ask something else','__menu']]);
+      });
+      return;
+    }
     origChip(c);
   };
 
