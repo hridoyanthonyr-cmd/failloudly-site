@@ -4,141 +4,97 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hridoy Rozario — Integration &amp; Automation Engineering</title>
-<meta name="description" content="I build the systems that run behind your CRM — syncs, pipelines and background jobs that tell you when they break. Zoho, SmartSuite, Supabase, Apps Script.">
+<meta name="description" content="I build the systems that run behind your CRM — syncs, pipelines and background jobs that tell you when they break. Zoho One, SmartSuite, Supabase, Apps Script. Fixed prices published.">
+<meta property="og:title" content="Hridoy Rozario — Integration &amp; Automation Engineering">
+<meta property="og:description" content="I build systems that tell you when they break. Fixed prices, published.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://failloudly.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ground:#12171C;
-    --panel:#191F26;
-    --panel-2:#1F262E;
-    --line:#263039;
-    --line-soft:#1E262D;
-    --ink:#DDE3E8;
-    --ink-dim:#8A97A3;
-    --ink-faint:#5C6771;
-    --alert:#E8913A;
-    --ok:#4E9E86;
-    --crit:#D25A4E;
+    --ground:#12171C; --panel:#191F26; --panel-2:#1F262E;
+    --line:#263039; --line-soft:#1E262D;
+    --ink:#DDE3E8; --ink-dim:#8A97A3; --ink-faint:#5C6771;
+    --alert:#E8913A; --ok:#4E9E86; --crit:#D25A4E;
     --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
     --sans:"Archivo",system-ui,-apple-system,sans-serif;
+    --maxw:1080px;
   }
-
   *{box-sizing:border-box;margin:0}
   html{scroll-behavior:smooth}
-  body{
-    background:var(--ground);
-    color:var(--ink);
-    font-family:var(--sans);
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    font-variant-numeric:tabular-nums;
-  }
+  body{background:var(--ground);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
   a{color:inherit}
-  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--alert);outline-offset:3px}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--alert);outline-offset:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-  /* ---------- status bar ---------- */
-  .statusbar{
-    position:sticky;top:0;z-index:20;
-    background:rgba(18,23,28,.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .statusbar .wrap{
-    display:flex;justify-content:space-between;align-items:center;
-    gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px;
-    font-family:var(--mono);font-size:12px;letter-spacing:.06em;
-  }
-  .mark{font-weight:700;letter-spacing:.02em}
+  /* nav */
+  .statusbar{position:sticky;top:0;z-index:40;background:rgba(18,23,28,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .statusbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+    padding-top:12px;padding-bottom:12px;font-family:var(--mono);font-size:12px;letter-spacing:.05em}
+  .mark{font-weight:700}
   .mark span{color:var(--alert)}
-  .state{display:flex;align-items:center;gap:9px;color:var(--ok)}
-  .beacon{
-    width:8px;height:8px;border-radius:50%;background:var(--ok);
-    box-shadow:0 0 0 0 rgba(78,158,134,.6);
-    animation:ping 2.6s cubic-bezier(.2,.6,.4,1) infinite;
-  }
-  @keyframes ping{
-    0%{box-shadow:0 0 0 0 rgba(78,158,134,.55)}
-    70%{box-shadow:0 0 0 9px rgba(78,158,134,0)}
-    100%{box-shadow:0 0 0 0 rgba(78,158,134,0)}
-  }
+  .navlinks{display:none;gap:20px;margin-left:auto}
+  @media(min-width:820px){ .navlinks{display:flex} }
+  .navlinks a{color:var(--ink-dim);text-decoration:none}
+  .navlinks a:hover{color:var(--alert)}
+  .state{display:flex;align-items:center;gap:8px;color:var(--ok)}
+  .beacon{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:ping 2.6s cubic-bezier(.2,.6,.4,1) infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(78,158,134,.55)}70%{box-shadow:0 0 0 9px rgba(78,158,134,0)}100%{box-shadow:0 0 0 0 rgba(78,158,134,0)}}
 
-  /* ---------- hero ---------- */
-  .hero{padding:72px 0 8px;display:grid;gap:44px;grid-template-columns:1fr}
+  /* hero */
+  .hero{padding:70px 0 8px;display:grid;gap:44px;grid-template-columns:1fr}
   @media(min-width:900px){ .hero{grid-template-columns:1.05fr .95fr;align-items:center;gap:56px} }
-  h1{
-    font-family:var(--sans);font-weight:700;
-    font-size:clamp(34px,5.2vw,58px);
-    line-height:1.04;letter-spacing:-.025em;
-    text-wrap:balance;max-width:15ch;
-  }
+  h1{font-weight:700;font-size:clamp(33px,5vw,56px);line-height:1.05;letter-spacing:-.025em;text-wrap:balance;max-width:15ch}
   h1 em{font-style:normal;color:var(--alert)}
   .lede{color:var(--ink-dim);font-size:clamp(16px,1.5vw,18px);max-width:52ch;margin-top:22px}
   .herolinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-  .btn{
-    font-family:var(--mono);font-size:13px;letter-spacing:.04em;
-    text-decoration:none;padding:12px 18px;border:1px solid var(--line);
-    color:var(--ink);background:var(--panel);
-    transition:border-color .16s ease,color .16s ease;
-  }
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.03em;text-decoration:none;padding:12px 18px;
+    border:1px solid var(--line);color:var(--ink);background:var(--panel);cursor:pointer;
+    transition:border-color .16s ease,color .16s ease}
   .btn:hover{border-color:var(--alert);color:var(--alert)}
   .btn.primary{background:var(--alert);border-color:var(--alert);color:#16110A;font-weight:700}
   .btn.primary:hover{filter:brightness(1.08);color:#16110A}
 
-  /* ---------- console ---------- */
-  .console{
-    background:var(--panel);border:1px solid var(--line);
-    display:flex;flex-direction:column;min-height:320px;
-  }
-  .console-head{
-    display:flex;justify-content:space-between;align-items:center;gap:12px;
-    padding:11px 14px;border-bottom:1px solid var(--line);
-    font-family:var(--mono);font-size:11px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--ink-faint);
-  }
+  /* console */
+  .console{background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column}
+  .console-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 14px;
+    border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-faint)}
   .console-head .live{color:var(--alert);display:flex;align-items:center;gap:7px}
   .console-head .live i{width:6px;height:6px;background:var(--alert);border-radius:50%;display:block;animation:blink 1.4s steps(2,end) infinite}
   @keyframes blink{50%{opacity:.25}}
-  .feed{
-    font-family:var(--mono);font-size:12.5px;line-height:1.7;
-    padding:12px 14px;display:flex;flex-direction:column;
-    justify-content:flex-end;gap:3px;
-    overflow:hidden;flex:1;min-height:286px;
-  }
+  .feed{font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:12px 14px;display:flex;
+    flex-direction:column;justify-content:flex-end;gap:3px;overflow:hidden;flex:1;min-height:286px}
   .feed .row{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline}
   .feed .row.new{animation:slidein .34s ease}
   @keyframes slidein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .feed .t{color:var(--ink-faint)}
   .feed .lvl{font-weight:700;letter-spacing:.04em}
-  .feed .lvl.ok{color:var(--ok)}
-  .feed .lvl.warn{color:var(--alert)}
-  .feed .lvl.crit{color:var(--crit)}
+  .feed .lvl.ok{color:var(--ok)} .feed .lvl.warn{color:var(--alert)} .feed .lvl.crit{color:var(--crit)}
   .feed .msg{color:var(--ink-dim);overflow-wrap:anywhere}
   .feed .msg b{color:var(--ink);font-weight:500}
-  .console-foot{
-    border-top:1px solid var(--line);padding:10px 14px;
-    font-family:var(--mono);font-size:11px;color:var(--ink-faint);
-  }
+  .console-foot{border-top:1px solid var(--line);padding:10px 14px;font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
 
-  /* ---------- metrics ---------- */
+  /* metrics */
   .metrics{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:64px;grid-template-columns:repeat(2,1fr)}
   @media(min-width:760px){ .metrics{grid-template-columns:repeat(4,1fr)} }
   .metric{background:var(--panel);padding:20px 18px}
   .metric .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint)}
-  .metric .v{font-family:var(--mono);font-size:clamp(26px,3.4vw,34px);font-weight:700;margin-top:8px;letter-spacing:-.02em}
+  .metric .v{font-family:var(--mono);font-size:clamp(25px,3.2vw,33px);font-weight:700;margin-top:8px;letter-spacing:-.02em}
   .metric .n{color:var(--ink-dim);font-size:13px;margin-top:4px}
   .metric.hl .v{color:var(--alert)}
 
-  /* ---------- sections ---------- */
-  section{padding:88px 0 0}
-  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:34px;flex-wrap:wrap}
+  /* sections */
+  section{padding:88px 0 0;scroll-margin-top:60px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:32px;flex-wrap:wrap}
   .sec-head h2{font-size:clamp(21px,2.6vw,27px);font-weight:600;letter-spacing:-.015em}
   .sec-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);margin-left:auto}
+  .intro{color:var(--ink-dim);max-width:62ch;margin-bottom:28px}
 
-  /* ---------- recurring ---------- */
+  /* tracks */
   .classes{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:1fr}
   @media(min-width:820px){ .classes{grid-template-columns:repeat(3,1fr)} }
   .cls{background:var(--panel);padding:24px 22px}
@@ -146,41 +102,98 @@
   .cls h3{font-size:18px;font-weight:600;margin:10px 0 8px;letter-spacing:-.01em}
   .cls p{color:var(--ink-dim);font-size:15px}
 
-  /* ---------- incidents ---------- */
+  /* work log */
   .incidents{border:1px solid var(--line);background:var(--panel)}
   details{border-bottom:1px solid var(--line-soft)}
   details:last-child{border-bottom:0}
-  summary{
-    list-style:none;cursor:pointer;padding:16px 20px;
-    display:grid;gap:6px 16px;grid-template-columns:1fr auto;align-items:center;
-    transition:background .14s ease;
-  }
+  summary{list-style:none;cursor:pointer;padding:16px 20px;display:grid;gap:6px 16px;
+    grid-template-columns:1fr auto;align-items:center;transition:background .14s ease}
   summary::-webkit-details-marker{display:none}
   summary:hover{background:var(--panel-2)}
-  .inc-id{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em}
-  .inc-title{font-size:17px;font-weight:600;letter-spacing:-.01em;margin-top:3px}
+  .inc-id{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .kind{font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:700;border:1px solid;padding:2px 7px}
+  .kind.build{color:var(--alert);border-color:rgba(232,145,58,.4)}
+  .kind.repair{color:var(--ok);border-color:rgba(78,158,134,.4)}
+  .inc-title{font-size:17px;font-weight:600;letter-spacing:-.01em;margin-top:4px}
   .inc-meta{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.05em}
   .pill{border:1px solid var(--line);padding:3px 9px;color:var(--ok);white-space:nowrap}
   .pill.sev{color:var(--alert)}
   .chev{color:var(--ink-faint);font-family:var(--mono);transition:transform .18s ease;display:inline-block}
   details[open] .chev{transform:rotate(90deg)}
-  .inc-body{padding:2px 20px 24px;display:grid;gap:18px;grid-template-columns:1fr}
+  .inc-body{padding:2px 20px 22px;display:grid;gap:18px;grid-template-columns:1fr}
   @media(min-width:800px){ .inc-body{grid-template-columns:repeat(3,1fr);gap:26px} }
   .field .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:7px}
   .field p{color:var(--ink-dim);font-size:15px}
   .inc-stack{padding:0 20px 20px;display:flex;flex-wrap:wrap;gap:7px}
   .chip{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:4px 9px;color:var(--ink-faint)}
 
-  /* ---------- monitored systems ---------- */
+  /* pricing */
+  .prices{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:1fr}
+  @media(min-width:840px){ .prices{grid-template-columns:repeat(2,1fr)} }
+  .price{background:var(--panel);padding:24px 22px;display:flex;flex-direction:column;gap:12px}
+  .price .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+  .price h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
+  .price .amt{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--alert);white-space:nowrap}
+  .price .amt small{font-size:11px;color:var(--ink-faint);font-weight:400;display:block;text-align:right;letter-spacing:.06em}
+  .price p{color:var(--ink-dim);font-size:15px}
+  .price ul{margin:0;padding-left:18px;color:var(--ink-dim);font-size:14.5px}
+  .price li{margin-bottom:5px}
+  .price .band{font-family:var(--mono);font-size:11.5px;color:var(--ink-faint);border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+  .rates{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:1fr;margin-top:22px}
+  @media(min-width:700px){ .rates{grid-template-columns:repeat(3,1fr)} }
+  .rate{background:var(--panel);padding:18px 20px}
+  .rate .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint)}
+  .rate .v{font-family:var(--mono);font-size:19px;font-weight:700;margin-top:6px}
+  .rate .n{color:var(--ink-dim);font-size:14px;margin-top:4px}
+
+  /* process */
+  .steps{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:1fr}
+  @media(min-width:900px){ .steps{grid-template-columns:repeat(4,1fr)} }
+  .step-c{background:var(--panel);padding:22px 20px}
+  .step-c .n{font-family:var(--mono);font-size:11px;color:var(--alert);letter-spacing:.1em}
+  .step-c h3{font-size:16.5px;font-weight:600;margin:9px 0 7px}
+  .step-c p{color:var(--ink-dim);font-size:14.5px}
+
+  /* systems */
   .systems{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(2,1fr)}
   @media(min-width:700px){ .systems{grid-template-columns:repeat(4,1fr)} }
-  .sys{background:var(--panel);padding:14px 16px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim)}
+  .sys{background:var(--panel);padding:13px 16px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--ink-dim)}
   .sys i{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
 
-  /* ---------- contact ---------- */
-  .contact{margin-top:96px;border-top:1px solid var(--line);padding:56px 0 0}
+  /* intake */
+  .intake{margin-top:30px}
+  .intake .step{color:var(--ink-faint)}
+  .intake-body{padding:18px;display:flex;flex-direction:column;gap:14px;min-height:210px}
+  .qline{font-family:var(--mono);font-size:13px;color:var(--ink-dim);display:flex;gap:9px;align-items:flex-start}
+  .qline b{color:var(--alert);font-weight:700;flex:none}
+  .qline.answered b{color:var(--ok)}
+  .qline .ans{color:var(--ink);display:block;margin-top:3px;overflow-wrap:anywhere}
+  .qline .qt{display:block}
+  .field-in{display:flex;flex-direction:column;gap:10px}
+  .intake input,.intake textarea{width:100%;background:var(--ground);border:1px solid var(--line);color:var(--ink);
+    font-family:var(--mono);font-size:13px;padding:11px 12px;border-radius:0;resize:vertical}
+  .intake textarea{min-height:74px;line-height:1.6}
+  .intake input:focus,.intake textarea:focus{outline:none;border-color:var(--alert)}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{font-family:var(--mono);font-size:12px;background:var(--ground);border:1px solid var(--line);
+    color:var(--ink-dim);padding:8px 12px;cursor:pointer;transition:border-color .14s ease,color .14s ease}
+  .opt:hover{border-color:var(--ink-faint);color:var(--ink)}
+  .opt[aria-pressed="true"]{border-color:var(--alert);color:var(--alert)}
+  .rowbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .hint{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .summary{background:var(--ground);border:1px solid var(--line);padding:14px;font-family:var(--mono);
+    font-size:12.5px;line-height:1.7;color:var(--ink-dim);white-space:pre-wrap;overflow-wrap:anywhere;max-height:230px;overflow:auto}
+  .btn.copy.done,.btn.done{border-color:var(--ok);color:var(--ok)}
+
+  /* contact */
+  .contact{margin-top:96px;border-top:1px solid var(--line);padding:56px 0 0;scroll-margin-top:60px}
   .contact h2{font-size:clamp(26px,3.6vw,38px);font-weight:700;letter-spacing:-.02em;max-width:18ch;text-wrap:balance}
-  .contact p{color:var(--ink-dim);max-width:52ch;margin-top:16px}
+  .contact p{color:var(--ink-dim);max-width:54ch;margin-top:16px}
+  .addrline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:34px}
+  .addr-label{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+  .addr{font-family:var(--mono);font-size:clamp(16px,2.2vw,21px);font-weight:500;color:var(--alert);
+    text-decoration:none;border-bottom:1px solid rgba(232,145,58,.35);padding-bottom:3px;overflow-wrap:anywhere}
+  .addr:hover{border-bottom-color:var(--alert)}
   .links{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-family:var(--mono);font-size:13px}
   .links a{color:var(--ink-dim);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px}
   .links a:hover{color:var(--alert);border-color:var(--alert)}
@@ -197,7 +210,14 @@
 <div class="statusbar">
   <div class="wrap">
     <div class="mark">fail<span>loudly</span></div>
-    <div class="state"><span class="beacon"></span>AVAILABLE — TAKING WORK</div>
+    <nav class="navlinks">
+      <a href="#tracks">What I do</a>
+      <a href="#log">Work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Start</a>
+    </nav>
+    <div class="state"><span class="beacon"></span>AVAILABLE</div>
   </div>
 </div>
 
@@ -205,349 +225,650 @@
 
   <div class="hero">
     <div>
-      <h1>Most automation fails <em>quietly.</em></h1>
-      <p class="lede">An API runs out of credits. A sync stops. Two rules overwrite each other and nobody notices for a week. I build the syncs, pipelines and background jobs behind your CRM — and I make them tell you the moment something breaks.</p>
+      <h1>I build systems that tell you <em>when they break.</em></h1>
+      <p class="lede">CRM architecture, databases and integrations — plus the alerting that makes them honest. Most automation fails quietly: an API runs out of credits, a snapshot job doubles up, a backfill kills the live feed and nobody notices for days. Mine says so.</p>
       <div class="herolinks">
-        <a class="btn primary" href="mailto:hridoy@failloudly.com">Report a problem →</a>
-        <a class="btn" href="#incidents">Read the incident log</a>
+        <a class="btn primary" href="#contact">Start a project →</a>
+        <a class="btn" href="#pricing">See prices</a>
       </div>
     </div>
 
-    <div class="console" aria-label="Example event feed from systems I have built">
+    <div class="console" aria-label="Example event feed from systems built by Hridoy Rozario">
       <div class="console-head">
         <span>events · production</span>
         <span class="live"><i></i>live</span>
       </div>
       <div class="feed" id="feed"></div>
-      <div class="console-foot">Sample of the kind of events these systems emit. Nothing here is client data.</div>
+      <div class="console-foot">A sample of what these systems emit. No client data here.</div>
     </div>
   </div>
 
   <div class="metrics">
     <div class="metric hl"><div class="k">Tickets closed</div><div class="v" data-count="446">446</div><div class="n">Standing queue, one consultancy</div></div>
-    <div class="metric"><div class="k">Contracts</div><div class="v" data-count="51">51</div><div class="n">Across US, UK, NL, AU</div></div>
+    <div class="metric"><div class="k">Contracts</div><div class="v" data-count="51">51</div><div class="n">US, UK, NL, AU</div></div>
     <div class="metric"><div class="k">Hours billed</div><div class="v" data-count="6762">6,762</div><div class="n">Six years freelance</div></div>
     <div class="metric"><div class="k">Job success</div><div class="v">100%</div><div class="n">Top Rated on Upwork</div></div>
   </div>
 
-  <section id="classes">
-    <div class="sec-head">
-      <h2>Three failures I'm usually called in for</h2>
-      <span class="tag">recurring</span>
-    </div>
+  <section id="tracks">
+    <div class="sec-head"><h2>What I'm hired for</h2><span class="tag">three tracks</span></div>
     <div class="classes">
       <div class="cls">
-        <div class="sev">severity · high</div>
-        <h3>Data that won't move</h3>
-        <p>Two systems hold the same records and neither agrees with the other. I build the sync that settles it, with the edge cases handled and a log you can actually read.</p>
+        <div class="sev">build</div>
+        <h3>A system you don't have yet</h3>
+        <p>CRM architecture in Zoho One or SmartSuite, a Postgres database behind an outbound team, a workflow where each stage opens the next. Built around how your business runs, not around the demo config.</p>
       </div>
       <div class="cls">
-        <div class="sev">severity · high</div>
-        <h3>A spreadsheet doing a database's job</h3>
-        <p>It worked at 200 rows. At 20,000 it's slow, fragile and one accidental sort away from a bad afternoon. I move it to a real backend without losing the workflow your team knows.</p>
+        <div class="sev">connect</div>
+        <h3>Systems that don't talk</h3>
+        <p>Two tools holding the same records and disagreeing. A spreadsheet doing a database's job at 20,000 rows. Contracts retyped into three documents. I build the layer between them so nobody retypes anything.</p>
       </div>
       <div class="cls">
-        <div class="sev">severity · critical</div>
+        <div class="sev">repair</div>
         <h3>Automation that already broke</h3>
-        <p>An API out of credits, a sync that stopped silently, two rules overwriting each other. I audit it, fix it, and make the next failure arrive as a warning instead of a missing month of data.</p>
+        <p>An API out of credits, a sync that stopped silently, two rules overwriting each other, duplicate records multiplying nightly. I audit it, fix it, and make the next failure arrive as a warning.</p>
       </div>
     </div>
   </section>
 
-  <section id="incidents">
-    <div class="sec-head">
-      <h2>Incident log</h2>
-      <span class="tag">10 resolved · client names withheld</span>
-    </div>
+  <section id="log">
+    <div class="sec-head"><h2>Work log</h2><span class="tag">10 built · 2 repaired · client names withheld</span></div>
+    <p class="intro">Every entry is real work for a real client, described without naming them. Builds show what was asked for and what shipped; repairs show the symptom, the cause, and the fix.</p>
 
     <div class="incidents">
-
-      <details open>
-        <summary>
-          <div>
-            <div class="inc-id">INC-001 · community nonprofit · zoho crm</div>
-            <div class="inc-title">Pledges were being forgotten</div>
-          </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
-        </summary>
-        <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>Donations tracked differently depending on who entered them. Pledges sat at 90% forever because the follow-up date lived in someone's head.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>One pipeline doing three jobs. No stage meant "promised but unpaid", so nothing could chase itself and every forecast was wrong.</p></div>
-          <div class="field"><span class="k">Fix</span><p>Three linked pipelines that hand records to each other. A pledge now creates its donation record, chases itself a week before the due date, and marks itself lapsed after thirty days unpaid.</p></div>
-        </div>
-        <div class="inc-stack"><span class="chip">Zoho CRM</span><span class="chip">Zoho Books</span><span class="chip">Blueprints</span></div>
-      </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-002 · roofing contractor · smartsuite</div>
-            <div class="inc-title">A scheduling job creating a duplicate every night</div>
+            <div class="inc-id"><span class="kind build">build</span>01 · community nonprofit · zoho crm</div>
+            <div class="inc-title">A fundraising system that chases its own pledges</div>
           </div>
-          <div class="inc-meta"><span class="pill sev">was critical</span><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>Records multiplying. Automations referencing fields that no longer existed. Two rules writing to the same field in an order nobody controlled.</p></div>
+          <div class="field"><span class="k">Brief</span><p>Donations were tracked differently depending on who entered them, and pledges sat at 90% forever because the follow-up date lived in someone's head.</p></div>
+          <div class="field"><span class="k">Approach</span><p>One pipeline was doing three jobs. There was no stage meaning &ldquo;promised but unpaid&rdquo;, so nothing could chase itself and every forecast was wrong.</p></div>
+          <div class="field"><span class="k">Result</span><p>Three linked pipelines that hand records to each other. Committing to a pledge creates the donation record with donor, family, campaign and solicitor carried across; it chases itself a week before the due date and marks itself lapsed after thirty days unpaid. Zoho Books issues the receipt.</p></div>
+        </div>
+        <div class="inc-stack"><span class="chip">Zoho CRM</span><span class="chip">Zoho Books</span><span class="chip">Blueprints</span><span class="chip">Pipeline design</span></div>
+      </details>
+      <details>
+        <summary>
+          <div>
+            <div class="inc-id"><span class="kind repair">repair</span>02 · roofing contractor · smartsuite</div>
+            <div class="inc-title">A scheduling job creating a duplicate every night</div>
+          </div>
+          <div class="inc-meta"><span class="pill sev">was critical</span><span class="pill">fixed</span><span class="chev">›</span></div>
+        </summary>
+        <div class="inc-body">
+          <div class="field"><span class="k">Symptom</span><p>Records multiplying nightly. Automations referencing fields that no longer existed. Two rules writing the same field in an order nobody controlled.</p></div>
           <div class="field"><span class="k">Diagnosis</span><p>Years of additions with no audit. The record-creating automations had no lookup in front of them, so every re-run made another copy.</p></div>
           <div class="field"><span class="k">Fix</span><p>Audited every automation across three solutions, removed the broken and the redundant, made creation idempotent — update if it exists, create if it doesn't — and documented what remained in a register the client can read.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Idempotency</span><span class="chip">Documentation</span></div>
+        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Automation audit</span><span class="chip">Idempotency</span><span class="chip">Documentation</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-003 · outbound sales team · supabase</div>
-            <div class="inc-title">Enrichment API ran dry mid-month</div>
+            <div class="inc-id"><span class="kind repair">repair</span>03 · device fleet operator · bi pipeline</div>
+            <div class="inc-title">A backfill that silently stopped the live feed</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">fixed</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>A month of contact enrichment silently missing. Nobody knew until the numbers looked wrong at reporting time.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>Credit exhaustion with no instrumentation. The job kept running and kept "succeeding" — it just had nothing to write.</p></div>
-          <div class="field"><span class="k">Fix</span><p>Credit usage instrumented with threshold alerts to Slack before the balance runs dry, and every scattered sales alert consolidated into one channel. The failure now arrives as a warning.</p></div>
+          <div class="field"><span class="k">Symptom</span><p>A dashboard tracking device activity stopped updating for two days. Separately, the same device was recording several &ldquo;last seen&rdquo; timestamps per day when the design allowed one.</p></div>
+          <div class="field"><span class="k">Diagnosis</span><p>Two faults. Historical data had been loaded without updating the script handling current data, and the daily snapshot job was running more than once, duplicating rows per device.</p></div>
+          <div class="field"><span class="k">Fix</span><p>Restored the live feed by reinstating the missing trigger, changed the snapshot to run once daily and screen historical rows, then reconciled the report pages so one is authoritative rather than three disagreeing.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">Supabase</span><span class="chip">Apollo API</span><span class="chip">Slack API</span></div>
+        <div class="inc-stack"><span class="chip">Looker Studio</span><span class="chip">Scheduled jobs</span><span class="chip">Deduplication</span><span class="chip">Data warehouse</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-004 · interior design studio · apps script</div>
-            <div class="inc-title">Client refused to adopt a CRM</div>
+            <div class="inc-id"><span class="kind build">build</span>04 · interior design studio · apps script</div>
+            <div class="inc-title">A CRM inside the spreadsheet she already used</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>Every new client meant manually creating a Drive folder, copying a contract template, retyping their details into it, and remembering to send an intake form.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>Not a tooling gap — a preference. She wasn't going to learn a CRM, and telling her to was advice she'd never take.</p></div>
-          <div class="field"><span class="k">Fix</span><p>Built the CRM inside the spreadsheet she already used. A dashboard is the only sheet she touches; a button emails a pre-filled intake form, and the submission provisions the folder, merges the contract and advances the record.</p></div>
+          <div class="field"><span class="k">Brief</span><p>Every new client meant manually creating a Drive folder, copying a contract template, retyping their details into it and remembering to send an intake form.</p></div>
+          <div class="field"><span class="k">Approach</span><p>Not a tooling gap — a preference. She was never going to adopt a CRM, and saying so was advice she would never take.</p></div>
+          <div class="field"><span class="k">Result</span><p>Built the CRM inside the spreadsheet. A dashboard is the only sheet she touches; a button emails a pre-filled intake form, and the submission provisions the Drive folder, merges the contract, writes the link back and advances the record. Contract signed then creates the customer and draft invoice in QuickBooks.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">Google Apps Script</span><span class="chip">Drive API</span><span class="chip">QuickBooks</span></div>
+        <div class="inc-stack"><span class="chip">Google Apps Script</span><span class="chip">Drive / Docs API</span><span class="chip">Zapier</span><span class="chip">QuickBooks</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-005 · roofing contractor · reporting</div>
-            <div class="inc-title">Every KPI was a rolling total</div>
+            <div class="inc-id"><span class="kind build">build</span>05 · roofing contractor · reporting</div>
+            <div class="inc-title">Reporting rebuilt around fixed periods</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>The numbers existed but nobody could answer "was this week better than last?" — so nobody used them.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>Rolling figures with no period boundary. A dashboard that can't be compared to anything is decoration.</p></div>
-          <div class="field"><span class="k">Fix</span><p>Rebuilt around fixed periods — one snapshot per department, one company trend view — on metrics that are decisions: quoting turnaround, quote-to-job conversion, revenue per team day, invoice aging.</p></div>
+          <div class="field"><span class="k">Brief</span><p>The numbers existed but every figure was rolling, so nobody could answer whether this week beat last — and so nobody used them.</p></div>
+          <div class="field"><span class="k">Approach</span><p>A dashboard that can't be compared to anything is decoration. The metrics also weren't decisions: they measured activity rather than what the business steers on.</p></div>
+          <div class="field"><span class="k">Result</span><p>One snapshot tab per department and one company trend view, on metrics that are decisions: quoting turnaround in days, quote-to-job conversion, percentage of enquiries followed up, revenue per team day attended, and invoices aging past thirty days.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Formula fields</span><span class="chip">Looker Studio</span></div>
+        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Formula fields</span><span class="chip">Dashboards</span><span class="chip">Looker Studio</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-006 · community nonprofit · zoho crm</div>
-            <div class="inc-title">Relationship history vanishing on task close</div>
+            <div class="inc-id"><span class="kind build">build</span>06 · community nonprofit · zoho crm</div>
+            <div class="inc-title">Relationship history as a first-class record</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>Case managers tracking years of relationship in task notes. Close the task, lose the history.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>Tasks were being used for two incompatible things: what to do next, and what already happened.</p></div>
-          <div class="field"><span class="k">Fix</span><p>A separate module for things that actually happened — a meal, a call, an event, a class — linked to the person, household, case manager and event. Tasks went back to being future actions.</p></div>
+          <div class="field"><span class="k">Brief</span><p>Case managers were tracking years of relationship in task notes. Closing the task lost the history.</p></div>
+          <div class="field"><span class="k">Approach</span><p>Tasks were being used for two incompatible things at once — what to do next, and what already happened.</p></div>
+          <div class="field"><span class="k">Result</span><p>A separate module for things that actually happened — a meal, a call, an event, a class — linked to the person, household, case manager and event. Each manager got a caseload view of their own people and a next-seven-days list. Tasks went back to being future actions.</p></div>
         </div>
         <div class="inc-stack"><span class="chip">Zoho CRM</span><span class="chip">Custom modules</span><span class="chip">Role-based views</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-007 · millwork shop · smartsuite</div>
-            <div class="inc-title">Every won sale re-entered by hand</div>
+            <div class="inc-id"><span class="kind build">build</span>07 · millwork shop · smartsuite</div>
+            <div class="inc-title">Production stages that hand work along</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>Sales closed in one system, production tracked in another, and each shop stage tracked wherever it happened to land.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>No handoffs. Every stage transition depended on a person remembering to make it.</p></div>
-          <div class="field"><span class="k">Fix</span><p>Each stage now opens the next. Sale won opens a project carrying scope, drawings and dates; ready-for-finishing opens a finishing record with its inspection checklist; a completed install opens a photography record.</p></div>
+          <div class="field"><span class="k">Brief</span><p>Sales closed in one system, production tracked in another, and each shop stage recorded wherever it happened to land.</p></div>
+          <div class="field"><span class="k">Approach</span><p>There were no handoffs. Every stage transition depended on a person remembering to make it.</p></div>
+          <div class="field"><span class="k">Result</span><p>Each stage now opens the next. A won sale opens a project carrying scope, drawings and install dates; ready-for-finishing opens a finishing record with its inspection checklist; completing it advances the parent and opens assembly, touch-ups, then photography.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Linked records</span><span class="chip">Checklists</span></div>
+        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Linked records</span><span class="chip">Status handoffs</span><span class="chip">Checklists</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-008 · community nonprofit · zoho forms</div>
-            <div class="inc-title">Returning families duplicating on every intake</div>
+            <div class="inc-id"><span class="kind build">build</span>08 · community nonprofit · zoho forms</div>
+            <div class="inc-title">One registration form, four linked records</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>One registration form producing four records typed by hand — and a second copy of every family that had registered before.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>The form created blindly. No identity field, so nothing could recognise a returning household.</p></div>
-          <div class="field"><span class="k">Fix</span><p>One submission mapped onto household, parent, each child and the enrolment, matched on email so returners update instead of duplicating. The enrolment can't advance until every child has verified forms.</p></div>
+          <div class="field"><span class="k">Brief</span><p>Family registration arrived as a form and left as retyping — a household, a parent, one record per child and an enrolment, all keyed by hand.</p></div>
+          <div class="field"><span class="k">Approach</span><p>The form created blindly. With no identity field, nothing could recognise a family that had registered before, so returners duplicated.</p></div>
+          <div class="field"><span class="k">Result</span><p>A single submission mapped onto all four records, matched on email so returning families update instead of duplicating. The enrolment can't advance to registered until every child attached to it has verified forms — one child or five, same rule.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">Zoho Forms</span><span class="chip">Deduplication</span><span class="chip">Data migration</span></div>
+        <div class="inc-stack"><span class="chip">Zoho Forms</span><span class="chip">Zoho CRM</span><span class="chip">Deduplication</span><span class="chip">Data migration</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-009 · healthcare staffing saas · zoho sign</div>
-            <div class="inc-title">Same details typed into three documents</div>
+            <div class="inc-id"><span class="kind build">build</span>09 · healthcare staffing saas · zoho sign</div>
+            <div class="inc-title">Contracts and billing that stop being retyped</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>Signing a facility meant retyping entity details into an order form, an exhibit and an invoice — three chances to get it wrong.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>Documents disconnected from the records that already held the data.</p></div>
-          <div class="field"><span class="k">Fix</span><p>Signature documents mapped back to CRM fields, subscription products with tiered pricing behind them, and contract-signed now provisions the customer and a draft invoice with the link written back.</p></div>
+          <div class="field"><span class="k">Brief</span><p>Signing a new facility meant typing the same entity details into an order form, an exhibit and an invoice — three chances to get it wrong.</p></div>
+          <div class="field"><span class="k">Approach</span><p>The documents were disconnected from the records that already held the data.</p></div>
+          <div class="field"><span class="k">Result</span><p>Signature documents mapped back to CRM fields — parent entity, state, address and signer on the order form; each facility's trading name, entity and monthly fee on the exhibit — with tiered subscription products behind them. Contract signed provisions the customer and a draft invoice, link written back.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">Zoho Sign</span><span class="chip">QuickBooks</span><span class="chip">API integration</span></div>
+        <div class="inc-stack"><span class="chip">Zoho Sign</span><span class="chip">Zoho CRM</span><span class="chip">QuickBooks</span><span class="chip">Subscription billing</span></div>
       </details>
-
       <details>
         <summary>
           <div>
-            <div class="inc-id">INC-010 · roofing contractor · lifecycle</div>
-            <div class="inc-title">Dead quotes inflating the pipeline</div>
+            <div class="inc-id"><span class="kind build">build</span>10 · roofing contractor · lifecycle</div>
+            <div class="inc-title">Dead quotes leave the pipeline on a clock</div>
           </div>
-          <div class="inc-meta"><span class="pill">resolved</span><span class="chev">›</span></div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
         </summary>
         <div class="inc-body">
-          <div class="field"><span class="k">Symptom</span><p>Quotes that had gone quiet months ago still counted as open, making every conversion figure a fiction.</p></div>
-          <div class="field"><span class="k">Diagnosis</span><p>No exit condition. Nothing ever left the pipeline unless someone manually decided it was dead.</p></div>
-          <div class="field"><span class="k">Fix</span><p>Time-based exits — 24 hours after follow-ups complete, 72 at terms-sent — copying the record into a nurture board with a link back, then leaving the pipeline. The board calculates who's due a touchpoint next.</p></div>
+          <div class="field"><span class="k">Brief</span><p>Quotes that had gone quiet months earlier still counted as open, making every conversion figure a fiction.</p></div>
+          <div class="field"><span class="k">Approach</span><p>No exit condition. Nothing ever left the pipeline unless a person decided it was dead.</p></div>
+          <div class="field"><span class="k">Result</span><p>Time-based exits — 24 hours after follow-ups complete, 72 at terms-sent — copy the record into a nurture board with a link back and remove it from the pipeline. The board tracks last visit, call and seasonal email, and calculates who is due next.</p></div>
         </div>
-        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Time triggers</span><span class="chip">Lifecycle routing</span></div>
+        <div class="inc-stack"><span class="chip">SmartSuite</span><span class="chip">Time-based triggers</span><span class="chip">Lifecycle routing</span></div>
+      </details>
+      <details>
+        <summary>
+          <div>
+            <div class="inc-id"><span class="kind build">build</span>11 · marketing agency · freshsales + xero</div>
+            <div class="inc-title">Deal and invoice signals pushed to where the team works</div>
+          </div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
+        </summary>
+        <div class="inc-body">
+          <div class="field"><span class="k">Brief</span><p>An agency wanted to know when deals moved and when invoices went overdue, without anyone opening the CRM or the accounting system to check.</p></div>
+          <div class="field"><span class="k">Approach</span><p>The data existed in two systems nobody watched. Notifications also needed enough context to be actionable — a name alone tells you nothing.</p></div>
+          <div class="field"><span class="k">Result</span><p>Won-deal alerts pushed into Slack carrying employee size, business type, city, state and products, then the same pattern inverted for lost deals with the reason attached. Overdue invoices from the accounting system raised automatically as tasks in the team's project tool.</p></div>
+        </div>
+        <div class="inc-stack"><span class="chip">Freshsales</span><span class="chip">Xero</span><span class="chip">Slack API</span><span class="chip">ClickUp</span><span class="chip">Zapier</span></div>
+      </details>
+      <details>
+        <summary>
+          <div>
+            <div class="inc-id"><span class="kind build">build</span>12 · outbound sales team · supabase</div>
+            <div class="inc-title">A contact database built from APIs, not bought lists</div>
+          </div>
+          <div class="inc-meta"><span class="pill">shipped</span><span class="chev">›</span></div>
+        </summary>
+        <div class="inc-body">
+          <div class="field"><span class="k">Brief</span><p>An outbound team working from purchased lists with no way to tell which accounts resembled the ones that actually closed.</p></div>
+          <div class="field"><span class="k">Approach</span><p>Bought data goes stale and can't be reasoned about. The useful version is built from enrichment APIs and kept current, with identity resolved so the same person doesn't appear three times.</p></div>
+          <div class="field"><span class="k">Result</span><p>A Postgres database assembled from enrichment APIs — profiles deduplicated, firmographics attached, lookalike sets derived by query from closed accounts, and total-addressable-market analysis run off the same tables. Job-change detection enrolls a contact into the right sequence within days of them moving.</p></div>
+        </div>
+        <div class="inc-stack"><span class="chip">Supabase</span><span class="chip">PostgreSQL</span><span class="chip">TypeScript / Deno</span><span class="chip">HubSpot API</span><span class="chip">Apollo</span></div>
       </details>
 
     </div>
   </section>
 
-  <section id="systems">
-    <div class="sec-head">
-      <h2>Systems I work in</h2>
-      <span class="tag">all operational</span>
+  <section id="pricing">
+    <div class="sec-head"><h2>Pricing</h2><span class="tag">published · fixed where it can be</span></div>
+    <p class="intro">Most of this work has a known shape, so it has a known price. Scoped calls and fixed-price builds are listed below. Anything larger gets a written scope with a fixed number before I start — you should never get an invoice you haven't already seen.</p>
+
+    <div class="prices">
+      <div class="price">
+        <div class="top"><h3>Scoped call</h3><div class="amt">$45–100<small>30–60 min</small></div></div>
+        <p>You describe the problem, I tell you what's actually wrong and what it takes to fix it. Screen shared, no slides.</p>
+        <ul>
+          <li><b>$45 · 30 min</b> — one specific question: why is this sync failing, is this schema right, can this be automated at all</li>
+          <li><b>$80 · 60 min</b> — a system walkthrough: your CRM or stack reviewed live, with a written list of what I'd change</li>
+          <li><b>$100 · 60 min</b> — architecture session: we design the build together and you leave with the plan, whether or not I build it</li>
+        </ul>
+        <div class="band">Fee credited against the project if you book within 14 days.</div>
+      </div>
+
+      <div class="price">
+        <div class="top"><h3>Integration between two systems</h3><div class="amt">from $300<small>fixed price</small></div></div>
+        <p>One system's records appearing correctly in another, on a schedule, with failures that announce themselves.</p>
+        <ul>
+          <li><b>$300</b> — one-way sync, one object, field mapping and de-duplication</li>
+          <li><b>$650</b> — two-way sync with conflict rules and a reconciliation report</li>
+          <li><b>$1,400</b> — multi-object pipeline, historical backfill, retry and alerting</li>
+        </ul>
+        <div class="band">Zoho · SmartSuite · HubSpot · Freshsales · Xero · Shopify · Supabase · Sheets</div>
+      </div>
+
+      <div class="price">
+        <div class="top"><h3>CRM build or rebuild</h3><div class="amt">from $600<small>fixed price</small></div></div>
+        <p>The system designed around how you actually sell or deliver — stages, roles, permissions, automation, and reporting that reconciles.</p>
+        <ul>
+          <li><b>$600</b> — pipeline and stage redesign in an existing CRM, with automation for the stages that repeat</li>
+          <li><b>$1,600</b> — full build in Zoho One or SmartSuite: modules, layouts, roles, workflows, dashboards</li>
+          <li><b>$3,200</b> — migration from spreadsheets or a legacy CRM, including data cleaning and a parallel-run week</li>
+        </ul>
+        <div class="band">Includes a written admin handover so you aren't dependent on me afterwards.</div>
+      </div>
+
+      <div class="price">
+        <div class="top"><h3>Automation audit &amp; repair</h3><div class="amt">from $250<small>fixed price</small></div></div>
+        <p>Something that used to work stopped, or works but nobody trusts it. I find the cause, fix it, and instrument it so the next failure is loud.</p>
+        <ul>
+          <li><b>$250</b> — single broken workflow: root cause, fix, and a short write-up of what happened</li>
+          <li><b>$500</b> — full audit of one platform: every rule, function and connection mapped, conflicts listed, priorities ranked</li>
+          <li><b>$1,100</b> — audit plus rebuild of the failing parts, with monitoring and alerting on each job</li>
+        </ul>
+        <div class="band">Duplicate records, silent syncs, expired API credits, rules overwriting each other.</div>
+      </div>
+
+      <div class="price">
+        <div class="top"><h3>Database &amp; reporting layer</h3><div class="amt">from $500<small>fixed price</small></div></div>
+        <p>For when a spreadsheet is doing a database's job — 20,000 rows, five people editing, and no version anyone believes.</p>
+        <ul>
+          <li><b>$500</b> — Postgres or Supabase schema design with import of your existing data</li>
+          <li><b>$1,200</b> — schema plus ingestion jobs, de-duplication, and search for your team</li>
+          <li><b>$2,400</b> — full reporting pipeline: sources, transforms, snapshots, and dashboards that reconcile to the source</li>
+        </ul>
+        <div class="band">Supabase · Postgres · BigQuery · Apps Script · Python</div>
+      </div>
+
+      <div class="price">
+        <div class="top"><h3>Ongoing support</h3><div class="amt">$55–60<small>per hour</small></div></div>
+        <p>For teams who have systems running and want someone who already knows them on call. No minimum retainer, no lock-in.</p>
+        <ul>
+          <li>Queue-based support — you file it, I work it, you see the status</li>
+          <li>Change requests, new automations, onboarding new tools</li>
+          <li>Monthly health check on every job and integration you run</li>
+        </ul>
+        <div class="band">446 tickets closed on a standing queue for one consultancy over six years.</div>
+      </div>
     </div>
+
+    <div class="rates">
+      <div class="rate"><div class="k">Hourly</div><div class="v">$55–60</div><div class="n">Support, changes and undefined scope</div></div>
+      <div class="rate"><div class="k">Fixed price</div><div class="v">Most builds</div><div class="n">Agreed in writing before any work starts</div></div>
+      <div class="rate"><div class="k">Payment</div><div class="v">50 / 50</div><div class="n">Half on scope agreed, half on delivery</div></div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="sec-head"><h2>How the work runs</h2><span class="tag">four steps</span></div>
+    <p class="intro">The same sequence whether it's a $250 repair or a $3,200 migration. The point of it is that you know the number and the shape of the thing before I write anything.</p>
+    <div class="steps">
+      <div class="step-c"><div class="n">01</div><h3>You describe it</h3><p>Through the intake below or a scoped call. What you're trying to build, or what's failing, and what it's costing while it's broken.</p></div>
+      <div class="step-c"><div class="n">02</div><h3>I scope it in writing</h3><p>What I'll build, what it will and won't do, what I need from you, the fixed price and the date. You approve it before anything begins.</p></div>
+      <div class="step-c"><div class="n">03</div><h3>I build in the open</h3><p>Progress where you can see it, in your tools. You test as it goes rather than at the end, so surprises arrive early and cheap.</p></div>
+      <div class="step-c"><div class="n">04</div><h3>Handover with alarms on</h3><p>Documentation, admin access, and monitoring on every job. If something fails afterwards, you find out from the system, not from a customer.</p></div>
+    </div>
+
+    <div class="sec-head" style="margin-top:56px"><h2>Systems I work in</h2><span class="tag">daily</span></div>
     <div class="systems">
       <div class="sys"><i></i>Zoho One</div>
+      <div class="sys"><i></i>Zoho CRM</div>
       <div class="sys"><i></i>SmartSuite</div>
       <div class="sys"><i></i>HubSpot</div>
-      <div class="sys"><i></i>Pipedrive</div>
+      <div class="sys"><i></i>Freshsales</div>
+      <div class="sys"><i></i>Salesforce</div>
       <div class="sys"><i></i>Supabase</div>
       <div class="sys"><i></i>PostgreSQL</div>
-      <div class="sys"><i></i>TypeScript / Deno</div>
-      <div class="sys"><i></i>Google Apps Script</div>
-      <div class="sys"><i></i>Zapier</div>
-      <div class="sys"><i></i>Make.com</div>
-      <div class="sys"><i></i>Apollo</div>
       <div class="sys"><i></i>BigQuery</div>
-      <div class="sys"><i></i>Looker Studio</div>
-      <div class="sys"><i></i>Zoho Sign</div>
-      <div class="sys"><i></i>QuickBooks</div>
-      <div class="sys"><i></i>Shopify API</div>
+      <div class="sys"><i></i>Apps Script</div>
+      <div class="sys"><i></i>Python</div>
+      <div class="sys"><i></i>Node.js</div>
+      <div class="sys"><i></i>REST &amp; webhooks</div>
+      <div class="sys"><i></i>Make / Zapier</div>
+      <div class="sys"><i></i>Xero</div>
+      <div class="sys"><i></i>Shopify</div>
     </div>
   </section>
+  <section class="contact" id="contact">
+    <h2>Tell me what's breaking, or what you need built.</h2>
+    <p>Five questions, about ninety seconds. It goes straight to me — not to a form queue — and you'll have a reply with a scope and a price within one working day.</p>
 
-  <div class="contact">
-    <h2>Tell me what's broken.</h2>
-    <p>Send the problem and what it's costing you. I'll tell you how I'd approach it, how long it takes, and what it costs — usually within four hours.</p>
-    <div class="herolinks">
-      <a class="btn primary" href="mailto:hridoy@failloudly.com">hridoy@failloudly.com</a>
+    <div class="console intake" id="intake">
+      <div class="console-head">
+        <span>intake · new project</span>
+        <span class="step" id="stepcount">1 / 5</span>
+      </div>
+      <div class="intake-body" id="ibody">
+        <div class="qline"><b>&gt;</b><span class="qt">Loading intake…</span></div>
+      </div>
+      <div class="console-foot">Nothing is stored on this page. The last step hands you the message and opens your mail client.</div>
     </div>
+
+    <div class="addrline">
+      <span class="addr-label">or write to me directly</span>
+      <a class="addr" href="mailto:hridoy@failloudly.com">hridoy@failloudly.com</a>
+    </div>
+
     <div class="links">
-      <a href="https://www.linkedin.com/in/hridoy-rozario-b93369140/">LinkedIn</a>
-      <a href="https://github.com/hridoyanthonyr-cmd">GitHub</a>
-      <a href="https://www.upwork.com/freelancers/~0170f592412dd03e5c">Upwork</a>
+      <a href="https://www.linkedin.com/in/hridoy-anthony-rozario/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/hridoyanthonyr-cmd" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.upwork.com/freelancers/~01dad7ca23c9f6bd7c" target="_blank" rel="noopener">Upwork</a>
     </div>
-  </div>
 
-  <footer>
-    Named after the first rule: a system should tell you when it breaks.<br>
-    Montpellier, France — working with clients across Europe and North America.
-  </footer>
+    <footer>
+      Hridoy Anthony Rozario — integration &amp; automation engineering. Montpellier, France · working across US, UK, EU and AU time zones.<br>
+      Every project on this page is real client work, described without naming the client or exposing their data.<br>
+      failloudly.com — because the alternative is failing quietly.
+    </footer>
+  </section>
 
 </div>
 
+<!--
+  LIVE CHAT (optional, 5 minutes to enable)
+  ------------------------------------------------------------------
+  The intake above works with no server and no third party. If you also want to
+  answer visitors in real time from your phone, add one free widget below and
+  it will sit alongside the intake:
+
+    Crisp   — https://crisp.chat        free plan, iOS/Android/desktop apps
+    Tawk.to — https://www.tawk.to       free, unlimited agents
+
+  Sign up, copy the snippet they give you, and paste it directly under this
+  comment. Nothing else on the page needs to change.
+-->
 <script>
 (function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- event feed ---------- */
   var EVENTS = [
-    ['ok',   'sync <b>hubspot → supabase</b> · 1,204 records · 3.1s'],
-    ['ok',   'job change detected · contact <b>8814</b> · enrolling → sequence 4'],
-    ['warn', 'apollo credits <b>12% remaining</b> · alerting #ops'],
-    ['ok',   'dedupe key matched · record merged · <b>no duplicate created</b>'],
-    ['ok',   'pledge <b>2291</b> due in 7d · stage → reminder_needed · task assigned'],
-    ['ok',   'zoho books receipt generated · deal <b>4471</b> · status → sent'],
-    ['warn', 'sheet row count <b>19,842</b> · approaching practical limit'],
-    ['ok',   'smartsuite stage → ready_for_finishing · <b>finishing record opened</b>'],
-    ['ok',   'trigger table · <b>12 scheduled jobs</b> · 12 ok · 0 failed'],
-    ['crit', 'sync <b>failed</b> · auth token expired · retry in 60s · <b>alert sent</b>'],
-    ['ok',   'retry succeeded · <b>token refreshed</b> · backlog cleared · 41 records'],
-    ['ok',   'contract signed · quickbooks customer + <b>draft invoice created</b>'],
-    ['ok',   'intake submitted · drive folder provisioned · <b>contract merged</b>'],
-    ['warn', 'pledge <b>1877</b> overdue 31d · stage → lapsed · forecast adjusted'],
-    ['ok',   'nightly audit · <b>0 orphaned records</b> · 0 duplicate keys']
+    ['ok','Nightly snapshot written — <b>4,812 rows</b>, 0 duplicates'],
+    ['ok','Zoho CRM → SmartSuite sync complete in <b>3.4s</b>'],
+    ['warn','API credit balance at <b>18%</b> — refill before Friday'],
+    ['ok','Deal moved to <b>Closed Won</b> — invoice raised in Xero'],
+    ['ok','Contract generated from template, sent for signature'],
+    ['crit','Webhook endpoint returned <b>502</b> — retrying in 30s'],
+    ['ok','Retry succeeded on attempt <b>2</b> — no data lost'],
+    ['ok','1,204 contacts de-duplicated, <b>37 merges</b> applied'],
+    ['warn','Backfill queued behind live feed — <b>throttled to 200/min</b>'],
+    ['ok','Backfill finished — live feed never paused'],
+    ['ok','Overdue invoice reminder sent to <b>6 accounts</b>'],
+    ['ok','Pipeline report reconciled to source — <b>variance 0.00</b>'],
+    ['warn','Field mapping changed upstream — <b>1 column unmapped</b>'],
+    ['ok','Mapping patched, run re-queued'],
+    ['ok','New lead routed to owner in <b>under 1s</b>'],
+    ['crit','Duplicate snapshot detected — <b>run halted before write</b>'],
+    ['ok','Snapshot de-duplicated, single clean record committed'],
+    ['ok','Daily health check passed — <b>14 jobs</b>, all green']
+  ];
+  var feed = document.getElementById('feed');
+  if (feed) {
+    var idx = 0, MAXROWS = 11;
+    var clock = new Date(); clock.setHours(9, 41, 12, 0);
+    function stamp(){
+      clock.setSeconds(clock.getSeconds() + 7 + Math.floor(Math.random()*26));
+      function p(n){ return (n<10?'0':'') + n; }
+      return p(clock.getHours())+':'+p(clock.getMinutes())+':'+p(clock.getSeconds());
+    }
+    function push(animate){
+      var e = EVENTS[idx % EVENTS.length]; idx++;
+      var row = document.createElement('div');
+      row.className = 'row' + (animate && !reduce ? ' new' : '');
+      row.innerHTML = '<span class="t">'+stamp()+'</span>'
+        + '<span class="lvl '+e[0]+'">'+(e[0]==='ok'?'OK  ':e[0]==='warn'?'WARN':'CRIT')+'</span>'
+        + '<span class="msg">'+e[1]+'</span>';
+      feed.appendChild(row);
+      while (feed.children.length > MAXROWS) feed.removeChild(feed.firstChild);
+    }
+    for (var i = 0; i < MAXROWS; i++) push(false);
+    if (!reduce) {
+      var tick = function(){
+        push(true);
+        setTimeout(tick, 2200 + Math.random()*2600);
+      };
+      setTimeout(tick, 2400);
+    }
+  }
+
+  /* ---------- count up ---------- */
+  var counters = document.querySelectorAll('[data-count]');
+  function runCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    if (!target || reduce) return;
+    var start = null, dur = 1100;
+    function frame(ts){
+      if (start === null) { start = ts; requestAnimationFrame(frame); return; }
+      var p = Math.min(1, (ts - start) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(frame);
+      else el.textContent = target.toLocaleString('en-US');
+    }
+    requestAnimationFrame(frame);
+  }
+  if (counters.length) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) { runCount(en.target); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.4 });
+      Array.prototype.forEach.call(counters, function(c){ io.observe(c); });
+    } else {
+      Array.prototype.forEach.call(counters, runCount);
+    }
+  }
+
+  /* ---------- intake ---------- */
+  var STEPS = [
+    { id:'problem', label:'The problem', type:'textarea',
+      q:'What do you need built, or what is going wrong?',
+      ph:'e.g. Our CRM and accounting system disagree about which invoices are paid, and someone reconciles them by hand every Monday.' },
+    { id:'tools', label:'Tools involved', type:'multi',
+      q:'Which tools are involved?',
+      options:['Zoho','SmartSuite','HubSpot','Salesforce','Freshsales','Airtable','Supabase / Postgres','Google Sheets','Xero / QuickBooks','Shopify','Make / Zapier','Something else'] },
+    { id:'since', label:'Current state', type:'single',
+      q:'Where are you with it right now?',
+      options:['Nothing built yet','Built, but it is not working right','Working, but held together by hand','Broken and costing us now'] },
+    { id:'cost', label:'Cost of the problem', type:'textarea',
+      q:'What is this costing you today — hours, money, or trust in the numbers?',
+      ph:'e.g. About 6 hours a week between two people, and we invoiced a client twice last month.' },
+    { id:'email', label:'Reply address', type:'email',
+      q:'Where should I send my reply?',
+      ph:'you@company.com' }
   ];
 
-  var feed = document.getElementById('feed');
-  if (!feed) return;
+  var body = document.getElementById('ibody');
+  var stepcount = document.getElementById('stepcount');
+  if (!body) return;
 
-  var clock = new Date();
-  clock.setHours(9, 41, 6, 0);
-  var i = 0;
-  var MAX = 7;
+  var answers = {}, cur = 0, picked = [];
 
-  function stamp(){
-    clock = new Date(clock.getTime() + (6000 + Math.floor(Math.random()*54000)));
-    var p = function(n){ return String(n).padStart(2,'0'); };
-    return p(clock.getHours()) + ':' + p(clock.getMinutes()) + ':' + p(clock.getSeconds());
+  function esc(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
-  function push(animate){
-    var e = EVENTS[i % EVENTS.length];
-    i++;
-    var row = document.createElement('div');
-    row.className = animate ? 'row new' : 'row';
-    row.innerHTML = '<span class="t">' + stamp() + '</span>' +
-                    '<span class="lvl ' + e[0] + '">' + e[0].toUpperCase() + '</span>' +
-                    '<span class="msg">' + e[1] + '</span>';
-    feed.appendChild(row);
-    while (feed.children.length > MAX) feed.removeChild(feed.firstChild);
+  function history(){
+    var out = '';
+    for (var i = 0; i < cur; i++) {
+      var s = STEPS[i];
+      out += '<div class="qline answered"><b>✓</b><span class="qt">' + esc(s.q)
+           + '<span class="ans">' + esc(answers[s.id] || '—') + '</span></span></div>';
+    }
+    return out;
   }
 
-  for (var k = 0; k < MAX; k++) push(false);
+  function render(){
+    if (cur >= STEPS.length) { finish(); return; }
+    var s = STEPS[cur];
+    if (stepcount) stepcount.textContent = (cur + 1) + ' / ' + STEPS.length;
+    picked = [];
 
-  if (!reduce) {
-    setInterval(function(){ push(true); }, 2600);
-  }
+    var input = '';
+    if (s.type === 'textarea') {
+      input = '<textarea id="fin" rows="3" placeholder="' + esc(s.ph) + '"></textarea>';
+    } else if (s.type === 'email') {
+      input = '<input id="fin" type="email" inputmode="email" autocomplete="email" placeholder="' + esc(s.ph) + '">';
+    } else {
+      var opts = s.options.map(function(o, i){
+        return '<button type="button" class="opt" data-i="' + i + '" aria-pressed="false">' + esc(o) + '</button>';
+      }).join('');
+      input = '<div class="opts">' + opts + '</div>';
+    }
 
-  // count-up on the metric tiles, once, when they scroll into view
-  if (!reduce && 'IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (!entry.isIntersecting) return;
-        var el = entry.target, target = parseInt(el.dataset.count, 10), start = null;
-        io.unobserve(el);
-        var settled = false;
-        setTimeout(function(){ if (!settled) el.textContent = target.toLocaleString('en-US'); }, 1400);
-        function step(ts){
-          if (!start) { start = ts; requestAnimationFrame(step); return; }
-          var p = Math.min((ts - start) / 900, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          if (p > 0) el.textContent = Math.floor(target * eased).toLocaleString('en-US');
-          if (p < 1) { requestAnimationFrame(step); }
-          else { settled = true; el.textContent = target.toLocaleString('en-US'); }
+    var hint = s.type === 'multi' ? '<span class="hint">pick as many as apply</span>'
+             : s.type === 'single' ? '<span class="hint">pick one</span>' : '';
+
+    body.innerHTML = history()
+      + '<div class="qline"><b>&gt;</b><span class="qt">' + esc(s.q) + '</span></div>'
+      + '<div class="field-in">' + input
+      + '<div class="rowbtns"><button type="button" class="btn primary" id="next">'
+      + (cur === STEPS.length - 1 ? 'Finish →' : 'Next →') + '</button>'
+      + (cur > 0 ? '<button type="button" class="btn" id="back">Back</button>' : '')
+      + hint + '</div></div>';
+
+    var fin = document.getElementById('fin');
+    if (fin) {
+      fin.focus({ preventScroll: true });
+      fin.addEventListener('keydown', function(ev){
+        if (ev.key === 'Enter' && (s.type === 'email' || ev.metaKey || ev.ctrlKey)) {
+          ev.preventDefault(); advance();
         }
-        requestAnimationFrame(step);
       });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.metric .v[data-count]').forEach(function(el){ io.observe(el); });
+    }
+
+    Array.prototype.forEach.call(body.querySelectorAll('.opt'), function(btn){
+      btn.addEventListener('click', function(){
+        var i = btn.getAttribute('data-i');
+        if (s.type === 'single') {
+          Array.prototype.forEach.call(body.querySelectorAll('.opt'), function(b){ b.setAttribute('aria-pressed','false'); });
+          picked = [i];
+          btn.setAttribute('aria-pressed','true');
+          setTimeout(advance, 160);
+        } else {
+          var at = picked.indexOf(i);
+          if (at === -1) { picked.push(i); btn.setAttribute('aria-pressed','true'); }
+          else { picked.splice(at,1); btn.setAttribute('aria-pressed','false'); }
+        }
+      });
+    });
+
+    var nx = document.getElementById('next');
+    if (nx) nx.addEventListener('click', advance);
+    var bk = document.getElementById('back');
+    if (bk) bk.addEventListener('click', function(){ cur--; render(); });
   }
+
+  function advance(){
+    var s = STEPS[cur];
+    var val;
+    if (s.type === 'multi' || s.type === 'single') {
+      if (!picked.length) return;
+      val = picked.map(function(i){ return s.options[i]; }).join(', ');
+    } else {
+      var fin = document.getElementById('fin');
+      val = fin ? fin.value.trim() : '';
+      if (!val) { if (fin) fin.focus(); return; }
+      if (s.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        fin.style.borderColor = '#D25A4E'; fin.focus(); return;
+      }
+    }
+    answers[s.id] = val;
+    cur++;
+    render();
+  }
+
+  function message(){
+    var lines = ['New project enquiry via failloudly.com', ''];
+    STEPS.forEach(function(s){
+      lines.push(s.label.toUpperCase());
+      lines.push(answers[s.id] || '—');
+      lines.push('');
+    });
+    return lines.join('\n');
+  }
+
+  function finish(){
+    if (stepcount) stepcount.textContent = 'complete';
+    var msg = message();
+    var mailto = 'mailto:hridoy@failloudly.com?subject='
+      + encodeURIComponent('New project — ' + (answers.since || 'enquiry'))
+      + '&body=' + encodeURIComponent(msg);
+
+    body.innerHTML = history()
+      + '<div class="qline answered"><b>✓</b><span class="qt">That is everything I need to give you a scope and a price.</span></div>'
+      + '<div class="summary" id="sum">' + esc(msg) + '</div>'
+      + '<div class="rowbtns">'
+      + '<a class="btn primary" id="send" href="' + mailto + '">Send it to me →</a>'
+      + '<button type="button" class="btn copy" id="copy">Copy the message</button>'
+      + '<button type="button" class="btn" id="restart">Start over</button>'
+      + '<span class="hint">reply within one working day</span></div>';
+
+    document.getElementById('copy').addEventListener('click', function(){
+      var b = this;
+      function done(){ b.textContent = 'Copied ✓'; b.classList.add('done');
+        setTimeout(function(){ b.textContent = 'Copy the message'; b.classList.remove('done'); }, 2200); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msg).then(done, fallback);
+      } else fallback();
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = msg; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch(e) {}
+        document.body.removeChild(ta);
+      }
+    });
+
+    document.getElementById('restart').addEventListener('click', function(){
+      answers = {}; cur = 0; render();
+    });
+  }
+
+  render();
 })();
 </script>
-
 </body>
 </html>
