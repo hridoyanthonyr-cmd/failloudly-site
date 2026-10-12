@@ -226,6 +226,16 @@
     *,*::before,*::after{animation:none !important;transition:none !important}
     html{scroll-behavior:auto}
   }
+
+.product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.product-card{background:var(--panel);border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;gap:16px}
+.product-card h3{font-size:25px;line-height:1.2}.product-card p{color:var(--ink-dim)}
+.product-status,.eyebrow{font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--alert)}
+.product-card .btn{align-self:flex-start;margin-top:auto}.product-price{font:22px var(--mono);color:var(--ink)}
+.product-note{font-size:13px;color:var(--ink-dim);margin-top:20px}.product-hero{padding:72px 0 40px}.product-hero h1{max-width:22ch;margin-top:20px}.product-hero .lede{max-width:62ch}
+.product-detail{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:start}.product-detail h2{font-size:25px;margin-bottom:16px}.product-detail p{color:var(--ink-dim);margin-bottom:16px}.feature-list{padding-left:20px;color:var(--ink-dim)}.feature-list li{margin-bottom:12px}.product-aside{background:var(--panel);padding:28px;border:1px solid var(--line)}.product-aside .btn{display:inline-block;margin:12px 0}.product-aside h2{font-size:20px}.product-faq{margin-top:48px}.product-faq details{padding:18px 0;border-bottom:1px solid var(--line)}.product-faq summary{cursor:pointer;font-weight:600}.product-faq p{color:var(--ink-dim);margin-top:12px;max-width:70ch}.product-footer{padding:48px 0;margin-top:64px;border-top:1px solid var(--line);font:12px var(--mono);color:var(--ink-dim)}.product-footer a{color:var(--ink);margin-right:18px}
+@media(max-width:819px){.navlinks{display:flex;flex-wrap:wrap;gap:12px;margin-left:0;width:100%;order:3}.product-grid,.product-detail{grid-template-columns:1fr}.product-hero{padding-top:40px}.product-card{padding:22px}.statusbar .state{margin-left:auto}}
+
 </style>
 </head>
 <body>
@@ -236,6 +246,7 @@
     <nav class="navlinks">
       <a href="#tracks">What I do</a>
       <a href="#log">Work</a>
+      <a href="/products">Products</a>
       <a href="#pricing">Pricing</a>
       <a href="#process">Process</a>
       <a href="#book">Book a call</a>
@@ -485,6 +496,11 @@
     </div>
   </section>
 
+  <section id="products"><div class="sec-head"><h2>Systems you can start with</h2><span class="tag">Fail Loudly products</span></div><p class="intro">Ready-made tools are the next chapter. Explore the first two products in development, or work with me on a custom system today.</p><div class="product-grid">
+<article class="product-card"><span class="product-status">In development · template</span><h3>Sheets CRM Kit</h3><p>Keep customers, deals and invoice tracking in one Google Sheets workspace. A practical starting point for a small business.</p><div class="product-price">Planned launch: $49</div><a class="btn primary" href="/products/sheets-crm-kit">Explore the kit →</a></article>
+<article class="product-card"><span class="product-status">Coming soon · monitoring</span><h3>Automation Monitor</h3><p>Know when a scheduled integration goes quiet. Planned heartbeat checks and failure alerts for your background jobs.</p><div class="product-price">Target price: $19/month</div><a class="btn" href="/products/automation-monitor">See what's planned →</a></article>
+</div><p class="product-note">Products are not yet available for purchase. Planned pricing may change. <a href="/products">Browse products →</a></p></section>
+
   <section id="pricing">
     <div class="sec-head"><h2>Pricing</h2><span class="tag">published · fixed where it can be</span></div>
     <p class="intro">Most of this work has a known shape, so it has a known price. Scoped calls and fixed-price builds are listed below. Anything larger gets a written scope with a fixed number before I start — you should never get an invoice you haven't already seen.</p>
@@ -612,7 +628,7 @@
         <button type="button" class="btn primary" id="startchat">Open the chat →</button>
       </div>
 
-      <div class="chan">
+      <div class="chan" id="book">
         <div class="k"><i></i>calendar</div>
         <h3>Book 30 minutes</h3>
         <p>Screen shared, no slides. You walk me through the stack, I tell you what I'd change and what it costs. Live availability, booked the moment you pick a slot.</p>
